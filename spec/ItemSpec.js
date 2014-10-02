@@ -1,4 +1,4 @@
-describe("Generar html resposta llarga", function() {
+describe("Generar html per a preguntes individuals", function() {
   var item;
 
   it("Generar una pregunta de resposta llarga", function() {
@@ -23,5 +23,5 @@ describe("Generar html resposta llarga", function() {
     item = new ItemMultipleChoice("De quin color era el cavall blanc de Santiago?",Repostes,666,false);
     item.generarPregunta();
     expect(item.html).toEqual("<p id=666>De quin color era el cavall blanc de Santiago?<br/><input type='checkbox' name='666'>Roig</input><br/><input type='checkbox' name='666'>Negre</input><br/><input type='checkbox' name='666'>Blanc</input><br/><input type='checkbox' name='666'>Verd</input><br/></p>");
-  });  
+  });
 });
