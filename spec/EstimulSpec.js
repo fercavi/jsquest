@@ -1,5 +1,5 @@
 describe("Generar Estímul complet", function() {
-  var estimul;  
+  var estimul;
   it("generar un estímul amb tots els tipus de preguntes", function() {
     var item;
     var items=[];
@@ -18,8 +18,7 @@ describe("Generar Estímul complet", function() {
     items.push(item);
     estimul = new Estimul("És l'enunciat del cavall", items);
     estimul.generarEstimul();
-    //expect(estimul.html).toEqual("<div><h2>És l'enunciat del cavall</h2>" + items[0].html +items[1].html + "</div>");
-    expect(estimul.html).toEqual("<div><h2>És l'enunciat del cavall</h2>" + items[0].html + items[1].html + items[2].html + items[3].html + "</div>");
+    expect(estimul.html).toEqual("<div class='generalbox'><h2>És l'enunciat del cavall</h2>" + items[0].html + items[1].html + items[2].html + items[3].html + "</div>");
   });
 
 });

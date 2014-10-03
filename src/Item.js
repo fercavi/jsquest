@@ -18,7 +18,9 @@ Item.prototype.iniciPreguntaGenerica = function() {
 Item.prototype.fiPreguntaGenerica = function() {
   this.html += "</p>";
 };
-
+Item.prototype.processarPregunta = function(){
+  
+}
 function ItemRespostaLlarga(Enunciat, id, Obligatoria) {
   Item.call(this, Enunciat, id, Obligatoria)
 }

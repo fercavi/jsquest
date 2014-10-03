@@ -1,0 +1,24 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="src/Item.js"></script>
+  <script type="text/javascript" src="src/Estimul.js"></script>
+  <script type="text/javascript" src="src/Questionari.js"></script>
+  <script type="text/javascript">
+     Q = new Questionari("Títol questionari","Instruccions completes del questionari, hauràs d'emplenar...","Instruccions");
+     var Repostes = ["Roig","Negre","Blanc","Verd"];
+     item = new ItemComboBox("De quin color era el cavall blanc de Santiago?",Repostes,666,false);
+     item.generarPregunta();
+     E= new Estimul("Enunciat de l'estimul del cavall",[item]);
+     E.generarEstimul();
+     Q.Add(E);
+     Q.generarHTML();
+     document.write(Q.html);
+  </script>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+
+</body>
+</html>

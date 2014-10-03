@@ -3,28 +3,46 @@
 <head>
   <script type="text/javascript" src="src/Item.js"></script>
   <script type="text/javascript" src="src/Estimul.js"></script>
-  <script type="text/javascript">
-    var items=[];
-    var item;
-    item = new ItemRespostaLlarga("De quin color era el cavall blanc de Santiago", 666, false);
-    item.generarPregunta();
-    items.push(item);
-    var Repostes = ["Roig", "Negre", "Blanc", "Verd"];
-    item = new ItemComboBox("De quin color era el cavall blanc de Santiago?", Repostes, 666, false);
-    item.generarPregunta();
-    items.push(item);
-    item = new ItemRadioButton("De quin color era el cavall blanc de Santiago?", Repostes, 666, false);
-    item.generarPregunta();
-    items.push(item);
-    item = new ItemMultipleChoice("De quin color era el cavall blanc de Santiago?", Repostes, 666, false);
-    item.generarPregunta();
-    items.push(item);
-    var esti = new Estimul("Títol",items);
-    esti.generarEstimul();
-    document.write(esti.html);
 
-  </script>
-
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
+
+<body>
+  <div id='page-mod-chat-report'>
+    <h1>Questionari del cavall </h1>
+    <div class='generalbox'>
+      <h2>És l'enunciat del cavall</h2>
+      <p id=666>De quin color era el cavall blanc de Santiago
+        <br/>
+        <textarea cols=80 rows=6 id=pregunta666></textarea>
+      </p>
+      <p id=666>De quin color era el cavall blanc de Santiago?
+        <br/>
+        <input type='checkbox' name='666'>Roig</input>
+        <br/>
+        <input type='checkbox' name='666'>Negre</input>
+        <br/>
+        <input type='checkbox' name='666'>Blanc</input>
+        <br/>
+        <input type='checkbox' name='666'>Verd</input>
+        <br/>
+      </p>
+      <table width=100%>
+        <tr>
+          <td>
+            <div align="left">
+              <input type='image' src='img/fletxaes.gif' />
+            </div>
+          </td>
+          <td>
+            <div align="right">
+              <input type='image' src='img/fletxadre.gif' />
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
 
 </html>
