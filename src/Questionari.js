@@ -9,7 +9,8 @@ function Questionari(Titol, Instruccions, TitolInstruccions) {
   //Creem l'estímul de les instruccions
   item = new Item(this.instruccions, -1, false);
   item.generarPregunta();
-  estimul = new Estimul(this.titolInstruccions, [item]);
+  estimul = new Estimul(this.titolInstruccions);
+  estimul.Add(item);
   estimul.generarEstimul();
   this.Add(estimul);
 }
@@ -40,17 +41,8 @@ Questionari.prototype.potAnarEnrere = function() {
 Questionari.prototype.generarHTML = function() {
   this.html = "<div id='page-mod-chat-report'>";
   this.html += "<h1>" + this.titol + "</h1>";
+
   estimul = this.estimuls[this.paginaactual];
   this.html += estimul.html;
-  this.html += "<table width=100%><tr><td><div align='left'>";
-  if (this.potAnarEnrere()) {
-    this.html += "<input type='image' name='esquerra' src='img/fletxaes.gif'/>";
-  }
-  this.html += "</div></td><td><div align='right'>";
-  if (this.potAnarAvant()) {
-    this.html += "<input type='image' name='dreta' value='dreta' src='img/fletxadre.gif' />";
-  }
-  this.html += "</div></td></tr></table>";
-
   this.html += "</div>";
 }

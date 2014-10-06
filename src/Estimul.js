@@ -1,9 +1,10 @@
-function Estimul(Enunciat, Preguntes) {
+function Estimul(Enunciat) {
   this.preguntes = [];
   this.html = "";
   this.enunciat = Enunciat;
-  this.preguntes = Preguntes;  
-
+}
+Estimul.prototype.Add= function(Item){
+  this.preguntes.push(Item);  
 }
 Estimul.prototype.afegirPreguntes = function() {
   for (i = 0; i < this.preguntes.length; i++) {

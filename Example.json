@@ -1,0 +1,40 @@
+{
+  "Document": {
+    "Questionari": {
+      "Titol": "El qÃ¼estionari del cavall blanc",
+      "Instruccions": "Les instruccions del qÃ¼estionari per anar omplint i tal",
+      "TitolInstruccions": "Instruccions",
+      "Estimuls": [
+        {
+          "Enunciat": "Enunciat, nomÃ©s tenim un enunciat ja que nomÃ©s tenim un estÃ­mul",
+          "Preguntes": [
+            {
+              "Enunciat": "De quin color era el cavall blanc de Santiago? (combo)",
+              "Id": "1",
+              "Obligatoria": "false",
+              "tipus": 1,
+              "Respostes": [
+                "roig",
+                "blanc",
+                "verd",
+                "negre"
+              ]
+            },
+            {
+              "Enunciat": "De quin color era el cavall blanc de Santiago? (Radiobuttno)",
+              "Id": "2",
+              "Obligatoria": "false",
+              "tipus": 2,
+              "Respostes": [
+                "roig",
+                "blanc",
+                "verd",
+                "negre"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
