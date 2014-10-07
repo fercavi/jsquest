@@ -1,4 +1,6 @@
 {
+  "urlEscape" : "http://www.google.com",
+  "MissategErrorObligatories" : "Falten obligatòries per contestar",
   "Document": {
     "Questionari": {
       "Titol": "El qÃ¼estionari del cavall blanc",

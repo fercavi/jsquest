@@ -1,80 +1,13 @@
 var _Documentq;
 var JSONData;
 var ArrayItemClasses = [];
+var URLEscape;
+var missatgeErrorObligatories;
+var __Respostes = [];
 
-function IniDocument(idDivOnEscriure, dataarray) {
-
-  //Anem a carregar les dependències:
-  JSONData = dataarray;
-  dependencies = ["src/Item.js", "src/Questionari.js", "src/Estimul.js"];
-  for (i = 0; i < dependencies.length; i++) {
-    loadScript(dependencies[i], postLoadDependencies);
-  }
-
-}
-
-function enviarRespostes(url) {
-  //TODO: enviarà les respostes en format JSON
-}
-
-function postLoadDependencies() {
-  //Açò només és temporal per veure resultats
-
-  ArrayItemClasses.push(Item); //0
-  ArrayItemClasses.push(ItemRespostaLlarga); //1
-  ArrayItemClasses.push(ItemComboBox); //2
-  ArrayItemClasses.push(ItemRadioButton); //3
-  ArrayItemClasses.push(ItemMultipleChoice); //4
-
-
-  data = JSON.parse(JSONData);
-  _document = data.Document;
-  _questionari = _document.Questionari;
-
-  Q = new Questionari(_questionari.Titol, _questionari.Instruccions, _questionari.TitolInstruccions);
-  for (i = 0; i < _questionari.Estimuls.length; i++) {
-    _estimul = _questionari.Estimuls[i];
-    E = new Estimul(_estimul.Enunciat);
-    for (j = 0; j < _estimul.Preguntes.length; j++) {
-      Pregunta = _estimul.Preguntes[j];
-      ItemClass = ArrayItemClasses[Pregunta.tipus];
-      Respostes = Pregunta.Respostes;
-      //TODO: veure com fer-ho elegant, no he trobat cap manera de passar "false" al boolean false
-      obligatoria = true;
-      if (Pregunta.Obligatoria == "false") {
-        obligatoria = false;
-      }
-
-      if (Respostes) {
-        _item = new ItemClass(Pregunta.Enunciat, Respostes, Pregunta.Id, obligatoria);
-      } else {
-        _item = new ItemClass(Pregunta.Enunciat, Pregunta.Id, obligatoria);
-      }
-      _item.generarPregunta();
-      E.Add(_item);
-    }
-    E.generarEstimul();
-    Q.Add(E);
-  }
-
-  Q.generarHTML();
-  _Documentq = new DocumentQ(Q, "document");
-  _Documentq.generarHTML();
-}
-
-function loadScript(url, callback) {
-  // Adding the script tag to the head as suggested before
-  var head = document.getElementsByTagName('head')[0];
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = url;
-
-  // Then bind the event to the callback function.
-  // There are several events for cross browser compatibility.
-  script.onreadystatechange = callback;
-  script.onload = callback;
-  // Fire the loading
-  head.appendChild(script);
+function Resposta(nom, valor) {
+  this.nom = nom;
+  this.valor = valor;
 }
 
 function DocumentQ(Questionari, idDivOnEscriure) {
@@ -82,16 +15,77 @@ function DocumentQ(Questionari, idDivOnEscriure) {
   this.html = "";
   this.contenedor = document.getElementById(idDivOnEscriure);
 }
-
+DocumentQ.prototype.enviarRespostes = function() {
+  alert(JSON.stringify(__Respostes));
+}
+DocumentQ.prototype.inserixResposta = function(__resposta) {
+  trobat = -1;
+  //for(i=0;i<__Respostes.length;i++){
+  //  alert(i);
+  //}
+  //for (i = 0; i < __Respostes.length; i++) {
+  //  if (__Respostes[i].nom == resposta.nom) {
+  //    trobat = i;
+  //  }
+  //}
+  //if (trobat != -1) {
+    //__Respostes.splice(trobat, 1);
+  //}
+  //__Respostes.push(resposta);
+  alert(__resposta.nom + ":" + __resposta.valor);
+}
+DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
+  //navegar per tot el contenedor buscant els <p> que tinguen obligatoria
+  //Aquesta funció també guardarà les preguntes
+  totescontestades = true;
+  preguntes = this.contenedor.getElementsByTagName("p");
+  for (i = 0; i < preguntes.length; i++) {
+    P_pregunta = preguntes[i];
+    obligatoria = P_pregunta.getAttribute("obligatoria");
+    P_id = P_pregunta.getAttribute("id");
+    //Cada pregunta és un formulari amb el nom: fidpregunta
+    //i tindrà un valor de pregunta+idpregunta. Eixa serà la resposta.
+    formulari = document.forms['f' + P_id];
+    if (formulari) {
+      if (formulari["pregunta" + P_id]) {
+        respostaContestada = formulari["pregunta" + P_id].value;
+        if (!respostaContestada && obligatoria){
+          totescontestades = false;
+          respostaContestada = "";
+        }
+        __resposta = new Resposta("pregunta" + P_id, respostaContestada);
+        this.inserixResposta(__resposta);
+      }
+    }
+  }
+  return totescontestades;
+}
 DocumentQ.prototype.seguent = function() {
-  this.questionari.seguent();
-  this.generarHTML();
-  //TODO: guardar resultats
+  if (this.GuardarRespostesicomprovarObligatoria()) {
+    this.questionari.seguent();
+    this.generarHTML();
+  } else {
+    alert(missatgeErrorObligatories);
+  }
 }
 DocumentQ.prototype.anterior = function() {
-  this.questionari.anterior();
-  this.generarHTML();
-  //TODO: guardar resultats
+  if (this.GuardarRespostesicomprovarObligatoria()) {
+    this.questionari.anterior();
+    this.generarHTML();
+  } else {
+    alert(missatgeErrorObligatories);
+  }
+}
+DocumentQ.prototype.acabar = function() {
+  if (this.GuardarRespostesicomprovarObligatoria()) {
+    this.enviarRespostes();
+  } else {
+    alert(missatgeErrorObligatories);
+  }
+}
+DocumentQ.prototype.cancelar = function() {
+  //TODO: cancel·lar
+  window.location = URLEscape;
 }
 DocumentQ.prototype.generarHTML = function() {
   this.questionari.generarHTML();
@@ -103,8 +97,10 @@ DocumentQ.prototype.generarHTML = function() {
   this.html += "</div></td><td><div align='right'>";
   if (this.questionari.potAnarAvant()) {
     this.html += "<img  name='dreta' src='img/fletxadre.gif' id='imatgedreta' onClick='_Documentq.seguent()' />";
+  } else { //si no pot anar avant és per que no ha acabat
+    this.html += "<input type='button' name='submit' value='acabar' onClick='_Documentq.acabar()' />";
   }
   this.html += "</div></td></tr></table>";
-
+  this.html += "<div align='center'><input type='button' name='cancelar' value='cancelar' onClick='_Documentq.cancelar()' /></div>"
   this.contenedor.innerHTML = this.html;
 }

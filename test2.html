@@ -1,12 +1,12 @@
 <html>
 
 <head>
-  <script type='text/javascript' src='src/DocumentQ.js'></script>
+  <script type='text/javascript' src='src/jsquest.js'></script>
   <script type='text/javascript'>
     window.onload = function() {
-      data = "{\"Document\":{\"Questionari\":{\"Titol\":\"El questionari del cavall blanc\",\"Instruccions\":\"Les instruccions del questionari per anar omplint i tal\",\"TitolInstruccions\":\"Instruccions\",\"Estimuls\":[{\"Enunciat\":\"Enunciat, nomes tenim un enunciat ja que nomes tenim un estimul\",\"Preguntes\":[{\"Enunciat\":\"De quin color era el cavall blanc de Santiago? (combo)\",\"Id\":\"1\",\"Obligatoria\":\"false\",\"tipus\":2,\"Respostes\":[\"roig\",\"blanc\",\"verd\",\"negre\"]},{\"Enunciat\":\"De quin color era el cavall blanc de Santiago? (Radiobutton)\",\"Id\":\"2\",\"Obligatoria\":\"true\",\"tipus\":3,\"Respostes\":[\"roig\",\"blanc\",\"verd\",\"negre\"]}]}]}}}";
+      data ="{\"urlEscape\": \"http://www.google.com\",\"MissategErrorObligatories\":\"Falten obligatories per contestar\", \"Document\":{\"Questionari\":{\"Titol\":\"El questionari del cavall blanc\",\"Instruccions\":\"Les instruccions del questionari per anar omplint i tal\",\"TitolInstruccions\":\"Instruccions\",\"Estimuls\":[{\"Enunciat\":\"Enunciat, nomes tenim un enunciat ja que nomes tenim un estimul\",\"Preguntes\":[{\"Enunciat\":\"De quin color era el cavall blanc de Santiago? (combo)\",\"Id\":\"1\",\"Obligatoria\":\"false\",\"tipus\":2,\"Respostes\":[\"roig\",\"blanc\",\"verd\",\"negre\"]},{\"Enunciat\":\"De quin color era el cavall blanc de Santiago? (Radiobutton)\",\"Id\":\"2\",\"Obligatoria\":\"true\",\"tipus\":3,\"Respostes\":[\"roig\",\"blanc\",\"verd\",\"negre\"]}]}]}}}";      
       IniDocument('document', data);
-      }
+    }
   </script>
   <link rel='stylesheet' type='text/css' href='css/style.css' />
 </head>
