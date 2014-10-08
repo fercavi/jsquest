@@ -4,6 +4,7 @@ var ArrayItemClasses = [];
 var URLEscape;
 var missatgeErrorObligatories;
 var __Respostes = [];
+var Respostes;
 var responseText;
 var contenedorResposta;
 
@@ -20,8 +21,19 @@ function DocumentQ(Questionari, idDivOnEscriure, idDivResultat) {
   this.contenedorResposta = document.getElementById(idDivResultat);
 }
 DocumentQ.prototype.enviarRespostes = function() {
-  responseText = JSON.stringify(__Respostes);
-  if (this.contenedorResposta) {    
+  //passem de preguntaid1, preguntaid2...  a id1,id2...
+  Respostes = [];
+  var valor;
+  var nom;
+  for(var i=0;i<__Respostes.length;i++){
+    nom = __Respostes[i].nom;
+    valor = __Respostes[i].valor;
+    nom = nom.substr(8);
+    r = new Resposta(nom,valor);
+    Respostes.push(r);
+  }
+  responseText = JSON.stringify(Respostes);
+  if (this.contenedorResposta) {
     this.contenedorResposta.value = responseText;
   }
 }
