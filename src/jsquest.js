@@ -1,3 +1,5 @@
+var DivOnEscriure = "";
+var DivResultat = "";
 function noferRes() {
 
 }
@@ -18,11 +20,13 @@ function loadScript(url, callback) {
   head.appendChild(script);
 }
 
-function IniDocument(idDivOnEscriure, dataarray) {
+function IniDocument(idDivOnEscriure, dataarray,idDivResultat) {
 
   //Include('src/Item.js')... seria més comprensible però js és així
   //quan carreguem la última és quan fem tot l'altre procés de càrrega
   JSONData = dataarray;
+  DivOnEscriure = idDivOnEscriure;
+  DivResultat = idDivResultat;
   dependencies = ["src/Item.js", "src/Questionari.js", "src/Estimul.js", "src/DocumentQ.js"];
   for (i = 0; i < dependencies.length; i++) {
     if (i == dependencies.length - 1) {
@@ -73,7 +77,7 @@ function postLoadDependencies() {
     Q.Add(E);
   }
 
-  Q.generarHTML();
-  _Documentq = new DocumentQ(Q, "document");
+  Q.generarHTML();  
+  _Documentq = new DocumentQ(Q, DivOnEscriure,DivResultat);
   _Documentq.generarHTML();
 }

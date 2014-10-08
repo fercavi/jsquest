@@ -4,19 +4,26 @@ var ArrayItemClasses = [];
 var URLEscape;
 var missatgeErrorObligatories;
 var __Respostes = [];
+var responseText;
+var contenedorResposta;
+
 
 function Resposta(nom, valor) {
   this.nom = nom;
   this.valor = valor;
 }
 
-function DocumentQ(Questionari, idDivOnEscriure) {
+function DocumentQ(Questionari, idDivOnEscriure, idDivResultat) {
   this.questionari = Questionari;
   this.html = "";
   this.contenedor = document.getElementById(idDivOnEscriure);
+  this.contenedorResposta = document.getElementById(idDivResultat);
 }
 DocumentQ.prototype.enviarRespostes = function() {
-  alert(JSON.stringify(__Respostes));
+  responseText = JSON.stringify(__Respostes);
+  if (this.contenedorResposta) {    
+    this.contenedorResposta.value = responseText;
+  }
 }
 DocumentQ.prototype.inserixResposta = function(__resposta) {
   trobat = -1;
@@ -104,7 +111,7 @@ DocumentQ.prototype.esRadioButton = function(pregunta) {
   res = false;
   index = pregunta.innerHTML.indexOf('type=\"radio\"');
   if (index != -1)
-    res = true;  
+    res = true;
   return res;
 }
 DocumentQ.prototype.getValorResposta = function(pregunta) {

@@ -4,12 +4,10 @@
   <script type='text/javascript' src='src/jsquest.js'></script>
   <script type='text/javascript'>
     var client = new XMLHttpRequest();
-
     function carrega() {
-      IniDocument('document', document.getElementById('jsontext').value);
+      IniDocument('document', document.getElementById('jsontext').value,'jsontextresult');
     }
-
-    function ompliTextArea() {      
+    function ompliTextArea() {
       document.getElementById('jsontext').value = client.responseText;
     }
     window.onload = function() {
@@ -30,6 +28,10 @@
   <div id='document'>
 
   </div>
+  <div id='result' align="center">
+    <textarea id='jsontextresult' rows=2 cols=90></textarea>
+  </div>
+
 </body>
 
 
