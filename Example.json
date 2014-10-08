@@ -3,18 +3,18 @@
   "MissategErrorObligatories" : "Falten obligatòries per contestar",
   "Document": {
     "Questionari": {
-      "Titol": "El qÃ¼estionari del cavall blanc",
-      "Instruccions": "Les instruccions del qÃ¼estionari per anar omplint i tal",
+      "Titol": "El qüestionari del cavall blanc",
+      "Instruccions": "Les instruccions del qüestionari per anar omplint i tal",
       "TitolInstruccions": "Instruccions",
       "Estimuls": [
         {
-          "Enunciat": "Enunciat, nomÃ©s tenim un enunciat ja que nomÃ©s tenim un estÃ­mul",
+          "Enunciat": "Enunciat, només tenim un enunciat ja que només tenim un estímul",
           "Preguntes": [
             {
               "Enunciat": "De quin color era el cavall blanc de Santiago? (combo)",
               "Id": "1",
               "Obligatoria": "false",
-              "tipus": 1,
+              "tipus": 2,
               "Respostes": [
                 "roig",
                 "blanc",
@@ -23,10 +23,10 @@
               ]
             },
             {
-              "Enunciat": "De quin color era el cavall blanc de Santiago? (Radiobuttno)",
+              "Enunciat": "De quin color era el cavall blanc de Santiago? (Radiobutton)",
               "Id": "2",
               "Obligatoria": "false",
-              "tipus": 2,
+              "tipus": 3,
               "Respostes": [
                 "roig",
                 "blanc",

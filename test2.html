@@ -3,15 +3,31 @@
 <head>
   <script type='text/javascript' src='src/jsquest.js'></script>
   <script type='text/javascript'>
+    var client = new XMLHttpRequest();
+
+    function carrega() {
+      IniDocument('document', client.responseText);
+    }
+
+    function ompliTextArea() {
+      alert(client.responseText);
+      document.getElementById('jsontext').value = client.responseText;
+    }
     window.onload = function() {
-      data ="{\"urlEscape\": \"http://www.google.com\",\"MissategErrorObligatories\":\"Falten obligatories per contestar\", \"Document\":{\"Questionari\":{\"Titol\":\"El questionari del cavall blanc\",\"Instruccions\":\"Les instruccions del questionari per anar omplint i tal\",\"TitolInstruccions\":\"Instruccions\",\"Estimuls\":[{\"Enunciat\":\"Enunciat, nomes tenim un enunciat ja que nomes tenim un estimul\",\"Preguntes\":[{\"Enunciat\":\"De quin color era el cavall blanc de Santiago? (combo)\",\"Id\":\"1\",\"Obligatoria\":\"false\",\"tipus\":2,\"Respostes\":[\"roig\",\"blanc\",\"verd\",\"negre\"]},{\"Enunciat\":\"De quin color era el cavall blanc de Santiago? (Radiobutton)\",\"Id\":\"2\",\"Obligatoria\":\"true\",\"tipus\":3,\"Respostes\":[\"roig\",\"blanc\",\"verd\",\"negre\"]}]}]}}}";      
-      IniDocument('document', data);
+      client.open('GET', './Example.json',false);
+  //    client.onload = ompliTextArea();
+      client.send();
+      ompliTextArea();
     }
   </script>
   <link rel='stylesheet' type='text/css' href='css/style.css' />
 </head>
 
 <body>
+  <div id='json' align="center">
+    <textarea id='jsontext' rows=20 cols=100></textarea>
+    <input type='button' value='Prova' onClick='carrega()'></input>
+  </div>
 
   <div id='document'>
 
