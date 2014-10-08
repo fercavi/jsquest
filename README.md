@@ -28,3 +28,8 @@ Document: Simplenet contrindrà un qüestionari
 Questionari: Tindrà Titol, subtítol, les instruccions i un conjunt d'estímuls.
 Estimul: Tindrà un Enunciat i un conjunt de Preguntes (Items).
 Preguntes: Tindrà un Enunciat, un Identificador, si es obligatoria, tipus (0,1,2,3,4, explicats anteriorment), i un array de Respostes si la pregunta té moltes respostes possibles.
+
+
+Dependències
+============
+No depen de cap biblioteca, l'única cosa que s'ha gastat és el jasmine per a fer tests, si es volen fer tots els tests s'ha d'obrir l'specrunner.html. Però no fa cap falta per a gastar la biblioteca. Cal tindre en compte que no he pogut fer cap test (per que no sé com fer-lo) de la classe DocumentQ ja que és l'encarregada del comportament (de fer click i eixes coses). Per tant, no hi ha cap test de DocumentQ a la carpeta Spec
