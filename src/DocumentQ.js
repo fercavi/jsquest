@@ -25,11 +25,11 @@ DocumentQ.prototype.enviarRespostes = function() {
   Respostes = [];
   var valor;
   var nom;
-  for(var i=0;i<__Respostes.length;i++){
+  for (var i = 0; i < __Respostes.length; i++) {
     nom = __Respostes[i].nom;
     valor = __Respostes[i].valor;
     nom = nom.substr(8);
-    r = new Resposta(nom,valor);
+    r = new Resposta(nom, valor);
     Respostes.push(r);
   }
   responseText = JSON.stringify(Respostes);
@@ -50,12 +50,19 @@ DocumentQ.prototype.inserixResposta = function(__resposta) {
   __Respostes.push(__resposta);
 }
 DocumentQ.prototype.ObtindreValorRadioButton = function(NomComponent) {
-  resultat = undefined;
+  resultat = "";
+  var valor;
   for (var i = 0; i < NomComponent.length; i++) {
     if (NomComponent[i].checked) {
-      resultat = NomComponent[i].value;
+      if (NomComponent[i].value = 'on')
+        valor = i;
+      else
+        valor = NomComponent[i].value;
+      resultat += valor + ",";
     }
   }
+  //llevem la ´ultima coma
+  resultat = resultat.substring(0,resultat.length-1);
   return resultat;
 }
 DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {

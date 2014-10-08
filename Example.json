@@ -14,7 +14,7 @@
               "Enunciat": "De quin color era el cavall blanc de Santiago? (combo)",
               "Id": "1",
               "Obligatoria": "false",
-              "tipus": 2,
+              "tipus": 4,
               "Respostes": [
                 "roig",
                 "blanc",
@@ -25,7 +25,7 @@
             {
               "Enunciat": "De quin color era el cavall blanc de Santiago? (Radiobutton)",
               "Id": "2",
-              "Obligatoria": "true",
+              "Obligatoria": "false",
               "tipus": 3,
               "Respostes": [
                 "roig",
