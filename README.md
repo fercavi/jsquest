@@ -20,7 +20,7 @@ DivTextAreaResult: l'identificador del TextArea on mostrarem el resultat en JSON
 on nom serà l'identificador de la pregunta i valor la resposta
 
 JSON d'entrada
-================
+--------------
 Es pot mirar Example JSON, camps:
 urlEscape: La url d'on es carregarà si es cancel·la el formulari
 MissategErrorObligatories: El missatge que es mostrarà si no es contesten totes les preguntes obligatòries
