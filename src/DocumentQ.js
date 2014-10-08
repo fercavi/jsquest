@@ -20,28 +20,34 @@ DocumentQ.prototype.enviarRespostes = function() {
 }
 DocumentQ.prototype.inserixResposta = function(__resposta) {
   trobat = -1;
-  //for(i=0;i<__Respostes.length;i++){
-  //  alert(i);
-  //}
-  //for (i = 0; i < __Respostes.length; i++) {
-  //  if (__Respostes[i].nom == resposta.nom) {
-  //    trobat = i;
-  //  }
-  //}
-  //if (trobat != -1) {
-    //__Respostes.splice(trobat, 1);
-  //}
-  //__Respostes.push(resposta);
-  alert(__resposta.nom + ":" + __resposta.valor);
+  for (var i = 0; i < __Respostes.length; i++) {
+    if (__Respostes[i].nom == __resposta.nom) {
+      trobat = i;
+    }
+  }
+  if (trobat != -1) {
+    __Respostes.splice(trobat, 1);
+  }
+  __Respostes.push(__resposta);
+}
+DocumentQ.prototype.ObtindreValorRadioButton = function(NomComponent) {
+  resultat = undefined;
+  for (var i = 0; i < NomComponent.length; i++) {
+    if (NomComponent[i].checked) {
+      resultat = NomComponent[i].value;
+    }
+  }
+  return resultat;
 }
 DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
   //navegar per tot el contenedor buscant els <p> que tinguen obligatoria
   //Aquesta funció també guardarà les preguntes
   totescontestades = true;
+
   preguntes = this.contenedor.getElementsByTagName("p");
-  for (i = 0; i < preguntes.length; i++) {
+  for (var i = 0; i < preguntes.length; i++) {
     P_pregunta = preguntes[i];
-    obligatoria = P_pregunta.getAttribute("obligatoria");
+    obligatoria = (P_pregunta.getAttribute("obligatoria")==="true");
     P_id = P_pregunta.getAttribute("id");
     //Cada pregunta és un formulari amb el nom: fidpregunta
     //i tindrà un valor de pregunta+idpregunta. Eixa serà la resposta.
@@ -49,12 +55,17 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
     if (formulari) {
       if (formulari["pregunta" + P_id]) {
         respostaContestada = formulari["pregunta" + P_id].value;
-        if (!respostaContestada && obligatoria){
-          totescontestades = false;
-          respostaContestada = "";
+        if (!respostaContestada) { //deu ser un radiobutton
+          respostaContestada = this.ObtindreValorRadioButton(formulari["pregunta" + P_id]);
         }
-        __resposta = new Resposta("pregunta" + P_id, respostaContestada);
-        this.inserixResposta(__resposta);
+        if (respostaContestada) {
+          __resposta = new Resposta("pregunta" + P_id, respostaContestada);
+          this.inserixResposta(__resposta);
+        }
+        if(!respostaContestada)
+          if (obligatoria===true){
+            totescontestades = false;            
+          }
       }
     }
   }
