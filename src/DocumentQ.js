@@ -45,9 +45,10 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
   totescontestades = true;
 
   preguntes = this.contenedor.getElementsByTagName("p");
+  var formulari;
   for (var i = 0; i < preguntes.length; i++) {
     P_pregunta = preguntes[i];
-    obligatoria = (P_pregunta.getAttribute("obligatoria")==="true");
+    obligatoria = (P_pregunta.getAttribute("obligatoria") === "true");
     P_id = P_pregunta.getAttribute("id");
     //Cada pregunta és un formulari amb el nom: fidpregunta
     //i tindrà un valor de pregunta+idpregunta. Eixa serà la resposta.
@@ -62,9 +63,9 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
           __resposta = new Resposta("pregunta" + P_id, respostaContestada);
           this.inserixResposta(__resposta);
         }
-        if(!respostaContestada)
-          if (obligatoria===true){
-            totescontestades = false;            
+        if (!respostaContestada)
+          if (obligatoria === true) {
+            totescontestades = false;
           }
       }
     }
@@ -98,6 +99,47 @@ DocumentQ.prototype.cancelar = function() {
   //TODO: cancel·lar
   window.location = URLEscape;
 }
+DocumentQ.prototype.esRadioButton = function(pregunta) {
+  var res, index;
+  res = false;
+  index = pregunta.innerHTML.indexOf('type=\"radio\"');
+  if (index != -1)
+    res = true;  
+  return res;
+}
+DocumentQ.prototype.getValorResposta = function(pregunta) {
+  var resposta = undefined;
+  for (var i = 0; i < __Respostes.length; i++) {
+    if (__Respostes[i].nom == pregunta) {
+      resposta = __Respostes[i].valor;
+    }
+  }
+  return resposta;
+}
+DocumentQ.prototype.carregarRespostes = function() {
+  var preguntes;
+  var P_pregunta;
+  preguntes = this.contenedor.getElementsByTagName("p");
+  var formulari;
+  for (var i = 0; i < preguntes.length; i++) {
+    P_pregunta = preguntes[i];
+    P_id = P_pregunta.getAttribute("id");
+    formulari = document.forms['f' + P_id];
+    if (formulari) {
+      if (formulari["pregunta" + P_id]) {
+        var valor;
+        valor = this.getValorResposta("pregunta" + P_id);
+        if (valor) {
+          if (this.esRadioButton(formulari)) {
+            formulari["pregunta" + P_id][valor].checked = true;
+          } else {
+            formulari["pregunta" + P_id].value = valor;
+          }
+        }
+      }
+    }
+  }
+}
 DocumentQ.prototype.generarHTML = function() {
   this.questionari.generarHTML();
   this.html = this.questionari.html;
@@ -114,4 +156,5 @@ DocumentQ.prototype.generarHTML = function() {
   this.html += "</div></td></tr></table>";
   this.html += "<div align='center'><input type='button' name='cancelar' value='cancelar' onClick='_Documentq.cancelar()' /></div>"
   this.contenedor.innerHTML = this.html;
+  this.carregarRespostes(); //carrega les respostes guardades
 }

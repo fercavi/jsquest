@@ -36,7 +36,7 @@ function ItemComboBox(Enunciat, Respostes, Id, Obligatoria) {
 ItemComboBox.prototype = new Item;
 ItemComboBox.prototype.processarPregunta = function() {
   this.html += "<select id=pregunta" +  this.Id + ">";
-  for (i = 0; i < this.respostes.length; i++) {
+  for (var i = 0; i < this.respostes.length; i++) {
     this.html += "<option value=" + i + ">" + this.respostes[i] + "</option>";
   }
   this.html += "</select>";
@@ -48,7 +48,7 @@ function ItemRadioButton(Enunciat, Respostes, Id, Obligatoria) {
 }
 ItemRadioButton.prototype = new Item;
 ItemRadioButton.prototype.processarPregunta = function() {
-  for (i = 0; i < this.respostes.length; i++) {
+  for (var i = 0; i < this.respostes.length; i++) {
     this.html += "<input type='radio' name='pregunta" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input><br/>";
   }
 }
@@ -59,7 +59,7 @@ function ItemMultipleChoice(Enunciat, Respostes, Id, Obligatoria) {
 }
 ItemMultipleChoice.prototype = new Item;
 ItemMultipleChoice.prototype.processarPregunta = function() {
-  for (i = 0; i < this.respostes.length; i++) {
+  for (var i = 0; i < this.respostes.length; i++) {
     this.html += "<input type='checkbox' name='pregunta" + this.Id + "'>" + this.respostes[i] + "</input><br/>";
   }
 }
