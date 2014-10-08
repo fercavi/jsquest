@@ -32,4 +32,4 @@ Preguntes: Tindrà un Enunciat, un Identificador, si es obligatoria, tipus (0,1,
 
 Dependències
 ============
-No depen de cap biblioteca, l'única cosa que s'ha gastat és el jasmine per a fer tests, si es volen fer tots els tests s'ha d'obrir l'specrunner.html. Però no fa cap falta per a gastar la biblioteca. Cal tindre en compte que no he pogut fer cap test (per que no sé com fer-lo) de la classe DocumentQ ja que és l'encarregada del comportament (de fer click i eixes coses). Per tant, no hi ha cap test de DocumentQ a la carpeta Spec
+No depen de cap biblioteca, l'única cosa que s'ha gastat és el jasmine per a fer tests, si es volen fer tots els tests s'ha d'obrir l'specrunner.html. Però no fa cap falta per a gastar la biblioteca. Cal tindre en compte que no he pogut fer cap test (per que no sé com fer-lo) de la classe DocumentQ ja que és l'encarregada del comportament (de fer click i eixes coses). Per tant, no hi ha cap test de DocumentQ a la carpeta Spec. S'inclou una fulla d'estils css/style.css i un parell d'imatges per a les fletxes a la carpeta img (fletxadre.gif i fletxaes.gif)
