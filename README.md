@@ -12,12 +12,15 @@ En test2.html es pot veure una demo. Per a poder gastar-lo cal enllaçar la bibl
 
 <script type='text/javascript' src='src/jsquest.js'></script>
 
-i després cridar a IniDocument(divContenedor,data,divTextAreaResult);
+i després cridar a IniDocument(divContenedor,data,OnVolemElResultat);
 DivContenedor és un l'identificador del div que mostrarà el contenedor
 data: serà el JSON amb les dades del qüestionari. Es proporciona un exemple en JSON, Example.json més avant mirarem els camps. En test2.html es pot modificar i anar vegent els resultats
-DivTextAreaResult: l'identificador del TextArea on mostrarem el resultat en JSON, serà un arraty d'este tipus:
+OnVolemElResultat: potser dos coses, 
+a)
+l'identificador del TextArea on mostrarem el resultat en JSON, serà un array d'este tipus:
 [{"nom":"1","valor":"1"},{"nom":"2","valor":"3"}]
-on nom serà l'identificador de la pregunta i valor la resposta
+on nom serà l'identificador de la pregunta i valor la resposta. 
+b) una funció: function(data){} què manipule el resultat
 
 JSON d'entrada
 --------------
