@@ -14,11 +14,19 @@ function Resposta(nom, valor) {
   this.valor = valor;
 }
 
-function DocumentQ(Questionari, idDivOnEscriure, idDivResultat) {
+function DocumentQ(Questionari, idDivOnEscriure, OnTornarValor) {
   this.questionari = Questionari;
   this.html = "";
   this.contenedor = document.getElementById(idDivOnEscriure);
-  this.contenedorResposta = document.getElementById(idDivResultat);
+
+  if (OnEscriure) {
+    if (Object.prototype.toString.call(OnTornarValor) == '[object Function]') {
+      this.contenedorResposta = OnTornarValor;
+    } else {
+      this.contenedorResposta = document.getElementById(OnTornarValor);
+    }
+  }
+
 }
 DocumentQ.prototype.enviarRespostes = function() {
   //passem de preguntaid1, preguntaid2...  a id1,id2...
@@ -34,7 +42,11 @@ DocumentQ.prototype.enviarRespostes = function() {
   }
   responseText = JSON.stringify(Respostes);
   if (this.contenedorResposta) {
-    this.contenedorResposta.value = responseText;
+    if (Object.prototype.toString.call(this.contenedorResposta) == '[object Function]') {
+      this.contenedorResposta(responseText);
+    } else {
+      this.contenedorResposta.value = responseText;
+    }
   }
 }
 DocumentQ.prototype.inserixResposta = function(__resposta) {
@@ -62,7 +74,7 @@ DocumentQ.prototype.ObtindreValorRadioButton = function(NomComponent) {
     }
   }
   //llevem la ´ultima coma
-  resultat = resultat.substring(0,resultat.length-1);
+  resultat = resultat.substring(0, resultat.length - 1);
   return resultat;
 }
 DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {

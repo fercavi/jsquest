@@ -4,14 +4,21 @@
   <script type='text/javascript' src='src/jsquest.js'></script>
   <script type='text/javascript'>
     var client = new XMLHttpRequest();
-    function carrega() {
-      IniDocument('document', document.getElementById('jsontext').value,'jsontextresult');
+
+    function mostra(data) {
+      alert(data);
     }
+
+    function carrega() {
+      IniDocument('document', document.getElementById('jsontext').value, 'jsontextresult');
+      //IniDocument('document', document.getElementById('jsontext').value, mostra);
+    }
+
     function ompliTextArea() {
       document.getElementById('jsontext').value = client.responseText;
     }
     window.onload = function() {
-      client.open('GET', './Example.json',false);
+      client.open('GET', './Example.json', false);
       client.send();
       ompliTextArea();
     }
