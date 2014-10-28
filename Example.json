@@ -11,10 +11,10 @@
           "Enunciat": "Enunciat, només tenim un enunciat ja que només tenim un estímul",
           "Preguntes": [
             {
-              "Enunciat": "De quin color era el cavall blanc de Santiago? (combo)",
+              "Enunciat": "Enunciat a preguntar |Color|Color1|Color2|Color3",
               "Id": "1",
               "Obligatoria": "false",
-              "tipus": 4,
+              "tipus": 5,
               "Respostes": [
                 "roig",
                 "blanc",

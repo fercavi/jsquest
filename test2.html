@@ -4,16 +4,13 @@
   <script type='text/javascript' src='src/jsquest.js'></script>
   <script type='text/javascript'>
     var client = new XMLHttpRequest();
-
     function mostra(data) {
       alert(data);
     }
-
     function carrega() {
       IniDocument('document', document.getElementById('jsontext').value, 'jsontextresult');
       //IniDocument('document', document.getElementById('jsontext').value, mostra);
     }
-
     function ompliTextArea() {
       document.getElementById('jsontext').value = client.responseText;
     }
@@ -25,21 +22,15 @@
   </script>
   <link rel='stylesheet' type='text/css' href='css/style.css' />
 </head>
-
 <body>
   <div id='json' align="center">
     <textarea id='jsontext' rows=20 cols=100></textarea>
     <input type='button' value='Prova' onClick='carrega()'></input>
   </div>
-
   <div id='document'>
-
   </div>
   <div id='result' align="center">
     <textarea id='jsontextresult' rows=2 cols=90></textarea>
   </div>
-
 </body>
-
-
 </html>

@@ -7,7 +7,7 @@ function Questionari(Titol, Instruccions, TitolInstruccions) {
   this.paginaactual = 0;
   this.html = "";
   //Creem l'estímul de les instruccions
-  item = new Item(this.instruccions, -1, false);
+  item = new Item(this.instruccions, -1, false,0);
   item.generarPregunta();
   estimul = new Estimul(this.titolInstruccions);
   estimul.Add(item);

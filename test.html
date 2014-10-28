@@ -1,10 +1,9 @@
 <html>
 
 <head>
-  <script type="text/javascript" src="src/Item.js"></script>
-  <script type="text/javascript" src="src/Estimul.js"></script>
+  <script type="text/javascript" src="src/draganddrop.js">
 
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </script>
 </head>
 
 <body>
@@ -12,21 +11,37 @@
     <h1>Questionari del cavall </h1>
     <div class='generalbox'>
       <h2>És l'enunciat del cavall</h2>
-      <p id=666>De quin color era el cavall blanc de Santiago
-        <br/>
-        <textarea cols=80 rows=6 id=pregunta666></textarea>
-      </p>
-      <p id=666>De quin color era el cavall blanc de Santiago?
-        <br/>
-        <input type='checkbox' name='666'>Roig</input>
-        <br/>
-        <input type='checkbox' name='666'>Negre</input>
-        <br/>
-        <input type='checkbox' name='666'>Blanc</input>
-        <br/>
-        <input type='checkbox' name='666'>Verd</input>
-        <br/>
-      </p>
+      <table border=1>
+        <tr>
+          <td heigth=100>
+            <!--div id="DiVSumergir" style="height:70px;cursor:move;" draggable="true" ondragstart="drag(event)">sumergir los tallos en agua</div-->
+            <div id="enunciat1_0" draggable="true" ondragstart="drag(event)">Color</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div>valerse de paciencia y esfuerzo</driv>
+          </td>
+        </tr>
+      </table>
+      <table border="1">
+        <tr border="1">
+          <td>Primer enunciat</td>
+          <td width=350>
+            <div id="DivDos" style="height:70px;" draggable="true" ondrop="drop(event)" ondragover="allowDrop(event)" ></div>
+          </td>
+        </tr>
+        <tr>
+          <td>Segon enunciat </td>
+          <td>&nbsp;</td>
+        </tr>
+
+      </table>
+      <!--p>Drag the W3Schools image into the rectangle:</p>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+<img id="drag1" src="http://www.w3schools.com/html/img_logo.gif" draggable="true" ondragstart="drag(event)" width="336" height="69">
       <table width=100%>
         <tr>
           <td>
@@ -41,8 +56,8 @@
           </td>
         </tr>
       </table>
-    </div>
-  </div>
+      </div>
+    </div-->
 </body>
 
 </html>

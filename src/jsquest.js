@@ -28,16 +28,15 @@ function IniDocument(idDivOnEscriure, dataarray,OnTorneLesDades) {
   JSONData = dataarray;
   OnEscriure = idDivOnEscriure;
   DivResultat = OnTorneLesDades;
-  dependencies = ["src/Item.js", "src/Questionari.js", "src/Estimul.js", "src/DocumentQ.js"];
+  dependencies = ["src/Item.js", "src/Questionari.js", "src/Estimul.js", "src/DocumentQ.js","src/draganddrop.js"];
 
-  for (i = 0; i < dependencies.length; i++) {
-    if (i == dependencies.length - 1) {
+  for (var i = 0; i < dependencies.length; i++) {
+    if (i == 3) {
       loadScript(dependencies[i], postLoadDependencies);
     } else {
       loadScript(dependencies[i], noferRes);
     }
   }
-
 }
 
 function postLoadDependencies() {
@@ -47,18 +46,18 @@ function postLoadDependencies() {
   ArrayItemClasses.push(ItemComboBox); //2
   ArrayItemClasses.push(ItemRadioButton); //3
   ArrayItemClasses.push(ItemMultipleChoice); //4
+  ArrayItemClasses.push(ItemDragAndDrop); //5
 
-
-  data = JSON.parse(JSONData);
+   data = JSON.parse(JSONData);
   _document = data.Document;
   _questionari = _document.Questionari;
   URLEscape = data.urlEscape;
   missatgeErrorObligatories = data.MissategErrorObligatories;
   Q = new Questionari(_questionari.Titol, _questionari.Instruccions, _questionari.TitolInstruccions);
-  for (i = 0; i < _questionari.Estimuls.length; i++) {
+  for (var i = 0; i < _questionari.Estimuls.length; i++) {
     _estimul = _questionari.Estimuls[i];
     E = new Estimul(_estimul.Enunciat);
-    for (j = 0; j < _estimul.Preguntes.length; j++) {
+    for (var j = 0; j < _estimul.Preguntes.length; j++) {
       Pregunta = _estimul.Preguntes[j];
       ItemClass = ArrayItemClasses[Pregunta.tipus];
       Respostes = Pregunta.Respostes;
@@ -68,9 +67,10 @@ function postLoadDependencies() {
         obligatoria = false;
       }
       if (Respostes) {
-        _item = new ItemClass(Pregunta.Enunciat, Respostes, Pregunta.Id, obligatoria);
+        _item = new ItemClass(Pregunta.Enunciat, Respostes, Pregunta.Id, obligatoria, Pregunta.tipus);
+
       } else {
-        _item = new ItemClass(Pregunta.Enunciat, Pregunta.Id, obligatoria);
+        _item = new ItemClass(Pregunta.Enunciat, Pregunta.Id, obligatoria,Pregunta.tipus);
       }
       _item.generarPregunta();
       E.Add(_item);
@@ -80,6 +80,6 @@ function postLoadDependencies() {
   }
 
   Q.generarHTML();
-  _Documentq = new DocumentQ(Q, OnEscriure,DivResultat);  
+  _Documentq = new DocumentQ(Q, OnEscriure,DivResultat);
   _Documentq.generarHTML();
 }

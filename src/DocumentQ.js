@@ -7,11 +7,58 @@ var __Respostes = [];
 var Respostes;
 var responseText;
 var contenedorResposta;
-
+const DefItem = 0;
+const DefItemRespostaLlarga = 1;
+const DefItemComboBox = 2;
+const DefItemRadioButton = 3;
+const DefItemMultipleChoice = 4;
+const DefItemDragAndDrop = 5;
 
 function Resposta(nom, valor) {
   this.nom = nom;
   this.valor = valor;
+}
+
+function ObtindreRespostaDragAndDrop(P_pregunta) {
+
+  var taules = P_pregunta.getElementsByClassName('desti'); //taula
+  var taula = taules[0];
+  var files = taula.rows;
+  var respostaContestada = "";
+  var respostaActual = "";
+  for (var j = 0; j < files.length; j++) {
+    fila = files[j].cells;
+    respostaActual = "";
+    if (fila[1].childNodes[0]) {
+      respostaActual = fila[1].childNodes[0].innerHTML;
+    }
+    if (j != (files.length - 1)) {
+      respostaActual += "|";
+    }
+    respostaContestada += respostaActual;
+  }
+  return respostaContestada;
+}
+
+function ObtindreRespostaNormal(nom) {
+  return nom.value;
+}
+
+function ObtindreValorMultiple(NomComponent) {
+  resultat = "";
+  var valor;
+  for (var i = 0; i < NomComponent.length; i++) {
+    if (NomComponent[i].checked) {
+      if (NomComponent[i].value = 'on')
+        valor = i;
+      else
+        valor = NomComponent[i].value;
+      resultat += valor + "|";
+    }
+  }
+  //llevem l'últim separador
+  resultat = resultat.substring(0, resultat.length - 1);
+  return resultat;
 }
 
 function DocumentQ(Questionari, idDivOnEscriure, OnTornarValor) {
@@ -61,46 +108,59 @@ DocumentQ.prototype.inserixResposta = function(__resposta) {
   }
   __Respostes.push(__resposta);
 }
-DocumentQ.prototype.ObtindreValorRadioButton = function(NomComponent) {
-  resultat = "";
-  var valor;
-  for (var i = 0; i < NomComponent.length; i++) {
-    if (NomComponent[i].checked) {
-      if (NomComponent[i].value = 'on')
-        valor = i;
-      else
-        valor = NomComponent[i].value;
-      resultat += valor + ",";
+DocumentQ.prototype.RespostaTaulaBuida = function(respostes) {
+  var EstaBuida = true;
+  for (var i = 0; i < respostes.length && EstaBuida; i++) {
+    if (respostes[i] != "") {
+      EstaBuida = false;
     }
   }
-  //llevem la ´ultima coma
-  resultat = resultat.substring(0, resultat.length - 1);
-  return resultat;
+  return EstaBuida;
 }
 DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
   //navegar per tot el contenedor buscant els <p> que tinguen obligatoria
   //Aquesta funció també guardarà les preguntes
-  totescontestades = true;
+  var totescontestades = true;
 
-  preguntes = this.contenedor.getElementsByTagName("p");
+  var preguntes = this.contenedor.getElementsByTagName("p");
   var formulari;
+  var __resposta;
+  var tipus;
+  var respostaContestada;
   for (var i = 0; i < preguntes.length; i++) {
-    P_pregunta = preguntes[i];
-    obligatoria = (P_pregunta.getAttribute("obligatoria") === "true");
+    var P_pregunta = preguntes[i];
+    var obligatoria = (P_pregunta.getAttribute("obligatoria") === "true");
     P_id = P_pregunta.getAttribute("id");
     //Cada pregunta és un formulari amb el nom: fidpregunta
     //i tindrà un valor de pregunta+idpregunta. Eixa serà la resposta.
     formulari = document.forms['f' + P_id];
+    tipus = parseInt(formulari.getAttribute("tipus"));
     if (formulari) {
-      if (formulari["pregunta" + P_id]) {
-        respostaContestada = formulari["pregunta" + P_id].value;
-        if (!respostaContestada) { //deu ser un radiobutton
-          respostaContestada = this.ObtindreValorRadioButton(formulari["pregunta" + P_id]);
-        }
-        if (respostaContestada) {
-          __resposta = new Resposta("pregunta" + P_id, respostaContestada);
-          this.inserixResposta(__resposta);
-        }
+      switch (tipus) {
+        case DefItem: //Els items normals no deueun de tindre resposta
+          break;
+        case DefItemRespostaLlarga:
+        case DefItemComboBox:
+          respostaContestada = ObtindreRespostaNormal(formulari["pregunta" + P_id]);
+          break;
+        case DefItemRadioButton:
+        case DefItemMultipleChoice:
+          respostaContestada = ObtindreValorMultiple(formulari["pregunta" + P_id]);
+          break;
+        case DefItemDragAndDrop:
+          respostaContestada = ObtindreRespostaDragAndDrop(P_pregunta);
+          arrayRespostes = respostaContestada.split("|");
+          if (this.RespostaTaulaBuida(arrayRespostes)) {
+            respostaContestada = undefined;
+          }
+          if ((arrayRespostes.indexOf("") != -1) && (obligatoria === true)) {
+            totescontestades = false;
+          }
+          break;
+      }
+      if (respostaContestada) {
+        __resposta = new Resposta("pregunta" + P_id, respostaContestada);
+        this.inserixResposta(__resposta);
         if (!respostaContestada)
           if (obligatoria === true) {
             totescontestades = false;
