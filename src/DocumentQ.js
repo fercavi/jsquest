@@ -161,10 +161,10 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
       if (respostaContestada) {
         __resposta = new Resposta("pregunta" + P_id, respostaContestada);
         this.inserixResposta(__resposta);
-        if (!respostaContestada)
-          if (obligatoria === true) {
-            totescontestades = false;
-          }
+      } else {
+        if (obligatoria === true) {
+          totescontestades = false;
+        }
       }
     }
   }
