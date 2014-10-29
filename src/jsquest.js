@@ -47,6 +47,8 @@ function postLoadDependencies() {
   ArrayItemClasses.push(ItemRadioButton); //3
   ArrayItemClasses.push(ItemMultipleChoice); //4
   ArrayItemClasses.push(ItemDragAndDrop); //5
+  ArrayItemClasses.push(ItemRadioButtonVertical); //6
+  ArrayItemClasses.push(ItemMultiShortAnswer); //7
 
    data = JSON.parse(JSONData);
   _document = data.Document;
@@ -67,10 +69,10 @@ function postLoadDependencies() {
         obligatoria = false;
       }
       if (Respostes) {
-        _item = new ItemClass(Pregunta.Enunciat, Respostes, Pregunta.Id, obligatoria, Pregunta.tipus);
+        _item = new ItemClass(Pregunta.Enunciat, Respostes, Pregunta.Id, obligatoria);
 
       } else {
-        _item = new ItemClass(Pregunta.Enunciat, Pregunta.Id, obligatoria,Pregunta.tipus);
+        _item = new ItemClass(Pregunta.Enunciat, Pregunta.Id, obligatoria);
       }
       _item.generarPregunta();
       E.Add(_item);

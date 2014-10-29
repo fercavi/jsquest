@@ -7,12 +7,7 @@ var __Respostes = [];
 var Respostes;
 var responseText;
 var contenedorResposta;
-const DefItem = 0;
-const DefItemRespostaLlarga = 1;
-const DefItemComboBox = 2;
-const DefItemRadioButton = 3;
-const DefItemMultipleChoice = 4;
-const DefItemDragAndDrop = 5;
+
 
 function Resposta(nom, valor) {
   this.nom = nom;
@@ -59,6 +54,17 @@ function ObtindreValorMultiple(NomComponent) {
   //llevem l'últim separador
   resultat = resultat.substring(0, resultat.length - 1);
   return resultat;
+}
+
+function ObtindreRespostaMultiShort(P_pregunta) {
+  var inputs = P_pregunta.getElementsByTagName("input");
+  var result = "";
+  for (var i = 0; i < inputs.length; i++) {
+    result += inputs[i].value;    
+    if (i != inputs.length - 1)
+      result += "|";
+  }
+  return result;
 }
 
 function DocumentQ(Questionari, idDivOnEscriure, OnTornarValor) {
@@ -108,7 +114,7 @@ DocumentQ.prototype.inserixResposta = function(__resposta) {
   }
   __Respostes.push(__resposta);
 }
-DocumentQ.prototype.RespostaTaulaBuida = function(respostes) {
+DocumentQ.prototype.RespostaArrayBuit = function(respostes) {
   var EstaBuida = true;
   for (var i = 0; i < respostes.length && EstaBuida; i++) {
     if (respostes[i] != "") {
@@ -143,19 +149,28 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
         case DefItemComboBox:
           respostaContestada = ObtindreRespostaNormal(formulari["pregunta" + P_id]);
           break;
+        case DefItemRadioButtonVertical:
         case DefItemRadioButton:
         case DefItemMultipleChoice:
           respostaContestada = ObtindreValorMultiple(formulari["pregunta" + P_id]);
           break;
         case DefItemDragAndDrop:
-          respostaContestada = ObtindreRespostaDragAndDrop(P_pregunta);
+        case DefItemMultiShortAnswer:
+
+          if (tipus == DefItemDragAndDrop) {
+            respostaContestada = ObtindreRespostaDragAndDrop(P_pregunta);
+          } else
+            respostaContestada = ObtindreRespostaMultiShort(P_pregunta);
           arrayRespostes = respostaContestada.split("|");
-          if (this.RespostaTaulaBuida(arrayRespostes)) {
+          if (this.RespostaArrayBuit(arrayRespostes)) {
             respostaContestada = undefined;
           }
           if ((arrayRespostes.indexOf("") != -1) && (obligatoria === true)) {
             totescontestades = false;
           }
+          break;
+
+        default:
           break;
       }
       if (respostaContestada) {
