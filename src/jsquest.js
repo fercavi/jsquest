@@ -28,7 +28,7 @@ function IniDocument(idDivOnEscriure, dataarray,OnTorneLesDades) {
   JSONData = dataarray;
   OnEscriure = idDivOnEscriure;
   DivResultat = OnTorneLesDades;
-  dependencies = ["src/Item.js", "src/Questionari.js", "src/Estimul.js", "src/DocumentQ.js","src/draganddrop.js"];
+  dependencies = ["src/Item.js", "src/Questionari.js", "src/Estimul.js", "src/DocumentQ.js","src/draganddrop.js","src/ObtindreRespostes.js"];
 
   for (var i = 0; i < dependencies.length; i++) {
     if (i == 3) {

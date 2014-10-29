@@ -13,60 +13,6 @@ function Resposta(nom, valor) {
   this.nom = nom;
   this.valor = valor;
 }
-
-function ObtindreRespostaDragAndDrop(P_pregunta) {
-
-  var taules = P_pregunta.getElementsByClassName('desti'); //taula
-  var taula = taules[0];
-  var files = taula.rows;
-  var respostaContestada = "";
-  var respostaActual = "";
-  for (var j = 0; j < files.length; j++) {
-    fila = files[j].cells;
-    respostaActual = "";
-    if (fila[1].childNodes[0]) {
-      respostaActual = fila[1].childNodes[0].innerHTML;
-    }
-    if (j != (files.length - 1)) {
-      respostaActual += "|";
-    }
-    respostaContestada += respostaActual;
-  }
-  return respostaContestada;
-}
-
-function ObtindreRespostaNormal(nom) {
-  return nom.value;
-}
-
-function ObtindreValorMultiple(NomComponent) {
-  resultat = "";
-  var valor;
-  for (var i = 0; i < NomComponent.length; i++) {
-    if (NomComponent[i].checked) {
-      if (NomComponent[i].value = 'on')
-        valor = i;
-      else
-        valor = NomComponent[i].value;
-      resultat += valor + "|";
-    }
-  }
-  //llevem l'últim separador
-  resultat = resultat.substring(0, resultat.length - 1);
-  return resultat;
-}
-
-function ObtindreRespostaMultiShort(P_pregunta) {
-  var inputs = P_pregunta.getElementsByTagName("input");
-  var result = "";
-  for (var i = 0; i < inputs.length; i++) {
-    result += inputs[i].value;    
-    if (i != inputs.length - 1)
-      result += "|";
-  }
-  return result;
-}
-
 function DocumentQ(Questionari, idDivOnEscriure, OnTornarValor) {
   this.questionari = Questionari;
   this.html = "";
@@ -114,15 +60,7 @@ DocumentQ.prototype.inserixResposta = function(__resposta) {
   }
   __Respostes.push(__resposta);
 }
-DocumentQ.prototype.RespostaArrayBuit = function(respostes) {
-  var EstaBuida = true;
-  for (var i = 0; i < respostes.length && EstaBuida; i++) {
-    if (respostes[i] != "") {
-      EstaBuida = false;
-    }
-  }
-  return EstaBuida;
-}
+
 DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
   //navegar per tot el contenedor buscant els <p> que tinguen obligatoria
   //Aquesta funció també guardarà les preguntes
@@ -162,7 +100,7 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
           } else
             respostaContestada = ObtindreRespostaMultiShort(P_pregunta);
           arrayRespostes = respostaContestada.split("|");
-          if (this.RespostaArrayBuit(arrayRespostes)) {
+          if (RespostaArrayBuit(arrayRespostes)) {
             respostaContestada = undefined;
           }
           if ((arrayRespostes.indexOf("") != -1) && (obligatoria === true)) {
