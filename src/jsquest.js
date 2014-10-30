@@ -3,7 +3,12 @@ var DivResultat = "";
 function noferRes() {
 
 }
-
+function  tipusTeRespostes(tipus){
+  var resultat = true;
+  if (tipus ==DefItem || tipus == DefItemRespostaLlarga)
+    resultat = false;
+  return  resultat;
+}
 
 function loadScript(url, callback) {
   // Adding the script tag to the head as suggested before
@@ -68,7 +73,7 @@ function postLoadDependencies() {
       if (Pregunta.Obligatoria == "false") {
         obligatoria = false;
       }
-      if (Respostes) {
+      if (tipusTeRespostes(Pregunta.tipus)) {
         _item = new ItemClass(Pregunta.Enunciat, Respostes, Pregunta.Id, obligatoria);
 
       } else {

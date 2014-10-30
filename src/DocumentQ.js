@@ -13,6 +13,7 @@ function Resposta(nom, valor) {
   this.nom = nom;
   this.valor = valor;
 }
+
 function DocumentQ(Questionari, idDivOnEscriure, OnTornarValor) {
   this.questionari = Questionari;
   this.html = "";
@@ -79,45 +80,15 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
     //i tindrà un valor de pregunta+idpregunta. Eixa serà la resposta.
     formulari = document.forms['f' + P_id];
     tipus = parseInt(formulari.getAttribute("tipus"));
-    if (formulari) {
-      switch (tipus) {
-        case DefItem: //Els items normals no deueun de tindre resposta
-          break;
-        case DefItemRespostaLlarga:
-        case DefItemComboBox:
-          respostaContestada = ObtindreRespostaNormal(formulari["pregunta" + P_id]);
-          break;
-        case DefItemRadioButtonVertical:
-        case DefItemRadioButton:
-        case DefItemMultipleChoice:
-          respostaContestada = ObtindreValorMultiple(formulari["pregunta" + P_id]);
-          break;
-        case DefItemDragAndDrop:
-        case DefItemMultiShortAnswer:
-
-          if (tipus == DefItemDragAndDrop) {
-            respostaContestada = ObtindreRespostaDragAndDrop(P_pregunta);
-          } else
-            respostaContestada = ObtindreRespostaMultiShort(P_pregunta);
-          arrayRespostes = respostaContestada.split("|");
-          if (RespostaArrayBuit(arrayRespostes)) {
-            respostaContestada = undefined;
-          }
-          if ((arrayRespostes.indexOf("") != -1) && (obligatoria === true)) {
-            totescontestades = false;
-          }
-          break;
-
-        default:
-          break;
-      }
-      if (respostaContestada) {
-        __resposta = new Resposta("pregunta" + P_id, respostaContestada);
-        this.inserixResposta(__resposta);
-      } else {
-        if (obligatoria === true) {
-          totescontestades = false;
-        }
+    var obtenidor = ObtindreObtenidor(tipus);
+    respostaContestada = obtenidor(P_pregunta);
+    comprovarBuida = ObtindreBuida(tipus);
+    if (!comprovarBuida(respostaContestada)) {      
+      __resposta = new Resposta("pregunta" + P_id, respostaContestada);
+      this.inserixResposta(__resposta);
+    } else {
+      if (obligatoria === true) {
+        totescontestades = false;
       }
     }
   }

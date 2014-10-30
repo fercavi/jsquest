@@ -32,8 +32,8 @@ Item.prototype.processarPregunta = function() {
 
 }
 
-function ItemRespostaLlarga(Enunciat, id, Obligatoria) {
-  Item.call(this, Enunciat, id, Obligatoria)
+function ItemRespostaLlarga(Enunciat, Id, Obligatoria) {  
+  Item.call(this, Enunciat, Id, Obligatoria)
   this.tipus = DefItemRespostaLlarga;
 }
 
