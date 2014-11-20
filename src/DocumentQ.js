@@ -72,15 +72,18 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
   var __resposta;
   var tipus;
   var respostaContestada;
+  var totescontestades = true;
   for (var i = 0; i < preguntes.length; i++) {
     var P_pregunta = preguntes[i];
     var obligatoria = (P_pregunta.getAttribute("obligatoria") === "true");
     P_id = P_pregunta.getAttribute("id");
+    if (P_id=="-1"){
+      return true;
+    }
     //Cada pregunta és un formulari amb el nom: fidpregunta
     //i tindrà un valor de pregunta+idpregunta. Eixa serà la resposta.
     formulari = document.forms['f' + P_id];
     tipus = parseInt(formulari.getAttribute("tipus"));
-
     //Simulador de polimorfisme entre obtenidors i comprovadors de si
     //la resposta està suficientment contestada
     var obtenidor = ObtindreObtenidor(tipus);
@@ -90,11 +93,12 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
       __resposta = new Resposta("pregunta" + P_id, respostaContestada);
       this.inserixResposta(__resposta);
     } else {
-      if (obligatoria === true) {
+      if (obligatoria == true) {
         totescontestades = false;
       }
     }
   }
+
   return totescontestades;
 }
 DocumentQ.prototype.seguent = function() {

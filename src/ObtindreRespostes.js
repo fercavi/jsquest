@@ -1,7 +1,7 @@
 //Funcions buida
 function RespostaBuidaNormal(resposta) {
   var resultat;
-  resultat = !resposta;
+  resultat = !resposta;  
   return resultat;
 }
 function RespostaArrayBuit(respostes) {

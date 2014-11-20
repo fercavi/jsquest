@@ -32,14 +32,14 @@ Item.prototype.processarPregunta = function() {
 
 }
 
-function ItemRespostaLlarga(Enunciat, Id, Obligatoria) {  
+function ItemRespostaLlarga(Enunciat, Id, Obligatoria) {
   Item.call(this, Enunciat, Id, Obligatoria)
   this.tipus = DefItemRespostaLlarga;
 }
 
 ItemRespostaLlarga.prototype = new Item;
 ItemRespostaLlarga.prototype.processarPregunta = function() {
-  this.html = this.html + "<textarea cols=80 rows=6 name=pregunta" + this.Id + "></textarea>";
+  this.html = this.html + "<textarea cols=55 rows=6 name=pregunta" + this.Id + "></textarea>";
 }
 
 function ItemComboBox(Enunciat, Respostes, Id, Obligatoria) {

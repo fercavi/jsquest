@@ -29,7 +29,7 @@ Questionari.prototype.Add = function(Estimul) {
 Questionari.prototype.potAnarAvant = function() {
   pucAnar = true;
   if (this.paginaactual == this.npagines -1 ) //comencem a comptar des de 0
-    pucAnar = false;
+    pucAnar = false;  
   return pucAnar;
 }
 Questionari.prototype.potAnarEnrere = function() {
