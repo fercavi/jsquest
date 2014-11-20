@@ -80,10 +80,13 @@ DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
     //i tindrà un valor de pregunta+idpregunta. Eixa serà la resposta.
     formulari = document.forms['f' + P_id];
     tipus = parseInt(formulari.getAttribute("tipus"));
+
+    //Simulador de polimorfisme entre obtenidors i comprovadors de si
+    //la resposta està suficientment contestada
     var obtenidor = ObtindreObtenidor(tipus);
+    var comprovarBuida = ObtindreBuida(tipus);
     respostaContestada = obtenidor(P_pregunta);
-    comprovarBuida = ObtindreBuida(tipus);
-    if (!comprovarBuida(respostaContestada)) {      
+    if (!comprovarBuida(respostaContestada)) {
       __resposta = new Resposta("pregunta" + P_id, respostaContestada);
       this.inserixResposta(__resposta);
     } else {
@@ -109,6 +112,7 @@ DocumentQ.prototype.anterior = function() {
   } else {
     alert(missatgeErrorObligatories);
   }
+
 }
 DocumentQ.prototype.acabar = function() {
   if (this.GuardarRespostesicomprovarObligatoria()) {
@@ -167,11 +171,11 @@ DocumentQ.prototype.generarHTML = function() {
   this.html = this.questionari.html;
   this.html += "<table width=100%><tr><td><div align='left'>";
   if (this.questionari.potAnarEnrere()) {
-    this.html += "<img name='esquerra' src='img/fletxaes.gif' id='imatgeesquerra' onClick='_Documentq.anterior()' />";
+    this.html += "<img name='esquerra' src='lib/jsquest/img/fletxaes.gif' id='imatgeesquerra' onClick='_Documentq.anterior()' />";
   }
   this.html += "</div></td><td><div align='right'>";
   if (this.questionari.potAnarAvant()) {
-    this.html += "<img  name='dreta' src='img/fletxadre.gif' id='imatgedreta' onClick='_Documentq.seguent()' />";
+    this.html += "<img  name='dreta' src='lib/jsquest/img/fletxadre.gif' id='imatgedreta' onClick='_Documentq.seguent()' />";
   } else { //si no pot anar avant és per que no ha acabat
     this.html += "<input type='button' name='submit' value='acabar' onClick='_Documentq.acabar()' />";
   }

@@ -35,7 +35,6 @@ function ObtindreBuida(tipus) {
   return funcioBuida;
 }
 
-
 //Obtenidors
 
 function ObtindreObtenidor(tipus) {

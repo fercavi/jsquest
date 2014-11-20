@@ -13,7 +13,7 @@
             {
               "Enunciat": "Enunciat a preguntar |Color|Color1|Color2|Color3",
               "Id": "1",
-              "Obligatoria": "false",
+              "Obligatoria": "true",
               "tipus": 5,
               "Respostes": [
                 "roig",

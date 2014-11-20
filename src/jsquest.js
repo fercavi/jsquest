@@ -25,15 +25,18 @@ function loadScript(url, callback) {
   head.appendChild(script);
 }
 
-function IniDocument(idDivOnEscriure, dataarray,OnTorneLesDades) {
+function IniDocument(idDivOnEscriure, dataarray,OnTorneLesDades, rutaJS) {
 
   //Include('src/Item.js')... seria més comprensible però js és així
   //quan carreguem la última és quan fem tot l'altre procés de càrrega
 
-  JSONData = dataarray;
+  JSONData = dataarray.replace(/&quot;/g,'"');
+  JSONData = JSONData.replace(/&amp;/g,'&');
+  JSONData = JSONData.replace(/&gt;/g,'>');
+  JSONData = JSONData.replace(/&lt;/g,'<');
   OnEscriure = idDivOnEscriure;
   DivResultat = OnTorneLesDades;
-  dependencies = ["src/Item.js", "src/Questionari.js", "src/Estimul.js", "src/DocumentQ.js","src/draganddrop.js","src/ObtindreRespostes.js"];
+  dependencies = [rutaJS+"/src/Item.js", rutaJS +"/src/Questionari.js", rutaJS+"/src/Estimul.js", rutaJS + "/src/DocumentQ.js",rutaJS+"/src/draganddrop.js",rutaJS+"/src/ObtindreRespostes.js"];
 
   for (var i = 0; i < dependencies.length; i++) {
     if (i == 3) {
