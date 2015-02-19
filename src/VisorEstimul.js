@@ -12,8 +12,7 @@ function  VisorEstimul(){
   localArrayClasses.push(ItemMultiShortAnswer); //7
 }
 VisorEstimul.prototype.load=function(jsonEstimul){	
-  var _estimul = JSON.parse(jsonEstimul);  
-  alert(_estimul.Contingut);
+  var _estimul = JSON.parse(jsonEstimul);    
   this.Estimul = new Estimul(_estimul.Enunciat,_estimul.Contingut)
   for(var i=0;i< _estimul.Preguntes.length; i++){
   	var Pregunta = _estimul.Preguntes[i];
