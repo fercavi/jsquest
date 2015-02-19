@@ -1,7 +1,8 @@
-function Estimul(Enunciat) {
+function Estimul(Enunciat, Contingut) {
   this.preguntes = [];
   this.html = "";
   this.enunciat = Enunciat;
+  this.contingut = Contingut;
 }
 Estimul.prototype.Add= function(Item){
   this.preguntes.push(Item);
@@ -15,6 +16,7 @@ Estimul.prototype.afegirPreguntes = function() {
 };
 Estimul.prototype.generarEstimul = function() {
   this.html = "<div class='generalbox'><h2>" + this.enunciat + "</h2>";
+  this.html += "<p>" +this.contingut + "</p>";
   this.afegirPreguntes();
   this.html += "</div>";
 };

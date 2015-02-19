@@ -9,6 +9,7 @@
       "Estimuls": [
         {
           "Enunciat": "Enunciat, només tenim un enunciat ja que només tenim un estímul",
+          "Contingut": "Contingut del primer estimul. <br/> Segona línia de l'enunciat",
           "Preguntes": [
             {
               "Enunciat": "Enunciat a preguntar |Color|Color1|Color2|Color3",

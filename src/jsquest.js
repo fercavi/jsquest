@@ -36,7 +36,7 @@ function IniDocument(idDivOnEscriure, dataarray,OnTorneLesDades, rutaJS) {
   JSONData = JSONData.replace(/&lt;/g,'<');
   OnEscriure = idDivOnEscriure;
   DivResultat = OnTorneLesDades;
-  dependencies = [rutaJS+"/src/Item.js", rutaJS +"/src/Questionari.js", rutaJS+"/src/Estimul.js", rutaJS + "/src/DocumentQ.js",rutaJS+"/src/draganddrop.js",rutaJS+"/src/ObtindreRespostes.js"];
+  dependencies = [rutaJS+"/src/Item.js", rutaJS +"/src/Questionari.js", rutaJS+"/src/Estimul.js", rutaJS + "/src/DocumentQ.js",rutaJS+"/src/draganddrop.js",rutaJS+"/src/ObtindreRespostes.js",rutaJS+"src/VisorEstimul.js"];
 
   for (var i = 0; i < dependencies.length; i++) {
     if (i == 3) {
@@ -66,7 +66,7 @@ function postLoadDependencies() {
   Q = new Questionari(_questionari.Titol, _questionari.Instruccions, _questionari.TitolInstruccions);
   for (var i = 0; i < _questionari.Estimuls.length; i++) {
     _estimul = _questionari.Estimuls[i];
-    E = new Estimul(_estimul.Enunciat);
+    E = new Estimul(_estimul.Enunciat,_estimul.Contingut);
     for (var j = 0; j < _estimul.Preguntes.length; j++) {
       Pregunta = _estimul.Preguntes[j];
       ItemClass = ArrayItemClasses[Pregunta.tipus];

@@ -1,17 +1,21 @@
-const DefItem = 0;
-const DefItemRespostaLlarga = 1;
-const DefItemComboBox = 2;
-const DefItemRadioButton = 3;
-const DefItemMultipleChoice = 4;
-const DefItemDragAndDrop = 5;
-const DefItemRadioButtonVertical = 6;
-const DefItemMultiShortAnswer = 7;
+var DefItem = 0;
+var DefItemRespostaLlarga = 1;
+var DefItemComboBox = 2;
+var DefItemRadioButton = 3;
+var DefItemMultipleChoice = 4;
+var DefItemDragAndDrop = 5;
+var DefItemRadioButtonVertical = 6;
+var DefItemMultiShortAnswer = 7;
 
 function Item(Enunciat, Id, Obligatoria) {
   this.enunciat = Enunciat;
   this.Id = Id;
   this.obligatoria = Obligatoria;
   this.tipus = DefItem;
+  this.Visor = undefined;  
+}
+Item.prototype.setVisor = function(){
+  this.Visor=true;
 }
 Item.prototype.generarPregunta = function() {
   this.iniciPreguntaGenerica();
@@ -19,14 +23,19 @@ Item.prototype.generarPregunta = function() {
   this.fiPreguntaGenerica();
 }
 Item.prototype.iniciPreguntaGenerica = function() {
-  this.html = "<form name='f" + this.Id + "' tipus='" + this.tipus + "'><p id=" + this.Id + " obligatoria='" + this.obligatoria + "' >";
+  this.html = "<br/><table align='center' border='1' cellpadding='10%'' cellspacing='0' width='100%'><tr><td><form name='f" + this.Id + "' tipus='" + this.tipus + "'><p id=" + this.Id + " obligatoria='" + this.obligatoria + "' >";  
+  if  (this.Visor){
+    this.html+= "<div align='right'><img src='img/green_flag.png' width=16>&nbsp;<img style='cursor:pointer' src='img/enviar.png' onClick='enviar("+this.Id+")'>&nbsp;<img style='cursor:pointer' src='img/edit.png' onClick='editarEstimulEnQuestionari("+this.Id+")' width=16><img style='cursor:pointer' src='img/baja.png' onClick='baixar("+this.Id+")' width=16>&nbsp;<img style='cursor:pointer' src='img/sube.png' onClick='pujar("+this.Id+")' width=16>&nbsp;<img style='cursor:pointer' src='img/delete.png' onClick='esborrarItem("+this.Id+")' width=16></div>" ;
+  }
   if (this.obligatoria) {
     this.html = this.html + "<font color='red'>*</font>";
-  }
-  this.html = this.html + this.enunciat + "<br/>";
+  }  
+  this.html = this.html + this.enunciat;
+  this.html +="<br/></br>";
+   
 };
 Item.prototype.fiPreguntaGenerica = function() {
-  this.html += "</p></form>";
+  this.html += "</p></form></td></tr></table>";
 };
 Item.prototype.processarPregunta = function() {
 
