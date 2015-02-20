@@ -7,7 +7,10 @@ var __Respostes = [];
 var Respostes;
 var responseText;
 var contenedorResposta;
-
+var cancelarText;
+var seguentText;
+var anteriorText;
+var acabarText;
 
 function Resposta(nom, valor) {
   this.nom = nom;
@@ -50,7 +53,7 @@ DocumentQ.prototype.enviarRespostes = function() {
   }
 }
 DocumentQ.prototype.inserixResposta = function(__resposta) {
-  trobat = -1;
+  var trobat = -1;
   for (var i = 0; i < __Respostes.length; i++) {
     if (__Respostes[i].nom == __resposta.nom) {
       trobat = i;
@@ -65,42 +68,35 @@ DocumentQ.prototype.inserixResposta = function(__resposta) {
 DocumentQ.prototype.GuardarRespostesicomprovarObligatoria = function() {
   //navegar per tot el contenedor buscant els <p> que tinguen obligatoria
   //Aquesta funció també guardarà les preguntes
-  var totescontestades = true;
-
-  var preguntes = this.contenedor.getElementsByTagName("p");
-  var formulari;
-  var __resposta;
+  var totescontestades = true;  
+  var preguntes ="";
   var tipus;
-  var respostaContestada;
-  var totescontestades = true;
-  for (var i = 0; i < preguntes.length; i++) {
-    var P_pregunta = preguntes[i];
-    var obligatoria = (P_pregunta.getAttribute("obligatoria") === "true");
-    P_id = P_pregunta.getAttribute("id");
-    if (P_id=="-1"){
-      return true;
-    }
-    //Cada pregunta és un formulari amb el nom: fidpregunta
-    //i tindrà un valor de pregunta+idpregunta. Eixa serà la resposta.
-    formulari = document.forms['f' + P_id];
-    tipus = parseInt(formulari.getAttribute("tipus"));
-    //Simulador de polimorfisme entre obtenidors i comprovadors de si
+  pare = this;
+  $("li.preguntaItem").each(function(index){    
+    tipus =parseInt($(this).attr("tipus"));
+    P_id = $(this).attr("id");
+    obligatoria = $(this).attr("obligatoria")==="true";
+     //Simulador de polimorfisme entre obtenidors i comprovadors de si
     //la resposta està suficientment contestada
-    var obtenidor = ObtindreObtenidor(tipus);
+    
+    var obtenidor = ObtindreObtenidor(tipus);    
     var comprovarBuida = ObtindreBuida(tipus);
-    respostaContestada = obtenidor(P_pregunta);
+    var __resposta;
+    var respostaContestada;  
+    respostaContestada = obtenidor(P_id);    
     if (!comprovarBuida(respostaContestada)) {
-      __resposta = new Resposta("pregunta" + P_id, respostaContestada);
-      this.inserixResposta(__resposta);
-    } else {
-      if (obligatoria == true) {
-        totescontestades = false;
+      __resposta = new Resposta("pregunta" + P_id, respostaContestada);      
+      pare.inserixResposta(__resposta);
+      } else {
+        if (obligatoria == true) {
+          totescontestades = false;
+        }
       }
-    }
+    
+    });
+    return totescontestades;
   }
 
-  return totescontestades;
-}
 DocumentQ.prototype.seguent = function() {
   if (this.GuardarRespostesicomprovarObligatoria()) {
     this.questionari.seguent();
@@ -172,19 +168,20 @@ DocumentQ.prototype.carregarRespostes = function() {
 }
 DocumentQ.prototype.generarHTML = function() {
   this.questionari.generarHTML();
-  this.html = this.questionari.html;
-  this.html += "<table width=100%><tr><td><div align='left'>";
+  this.html = this.questionari.html;  
+  this.html +='<ul class="pager">';
   if (this.questionari.potAnarEnrere()) {
-    this.html += "<img name='esquerra' src='lib/jsquest/img/fletxaes.gif' id='imatgeesquerra' onClick='_Documentq.anterior()' />";
+    this.html +='<li class="previous"><a href="javascript: _Documentq.anterior();">'+anteriorText+'</a></li>'; 
   }
-  this.html += "</div></td><td><div align='right'>";
+
   if (this.questionari.potAnarAvant()) {
-    this.html += "<img  name='dreta' src='lib/jsquest/img/fletxadre.gif' id='imatgedreta' onClick='_Documentq.seguent()' />";
-  } else { //si no pot anar avant és per que no ha acabat
-    this.html += "<input type='button' name='submit' value='acabar' onClick='_Documentq.acabar()' />";
+    this.html += '<li class="next"><a href="javascript: _Documentq.seguent();">'+seguentText+'</a></li>';
   }
-  this.html += "</div></td></tr></table>";
-  this.html += "<div align='center'><input type='button' name='cancelar' value='cancelar' onClick='_Documentq.cancelar()' /></div>"
+  else{
+    this.html += '<li class="next"><a href="javascript: _Documentq.acabar();">'+acabarText+'</a></li>'; 
+  }
+  this.html +='</ul>';
+  this.html += "<div align='center'><input type='button' name='cancelar' value='"+cancelarText+"' onClick='_Documentq.cancelar()' /></div>"
   this.contenedor.innerHTML = this.html;
   this.carregarRespostes(); //carrega les respostes guardades
 }

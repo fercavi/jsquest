@@ -18,8 +18,11 @@ Estimul.prototype.afegirPreguntes = function() {
   }
 };
 Estimul.prototype.generarEstimul = function() {
-  this.html = "<div class='generalbox'><h2>" + this.enunciat + "</h2>";  
-  this.html += "<p id=-1>" +this.contingut + "</p>";
+  this.html = "<div class='panel panel-primary'><div class='panel panel-heading'><h3 class='panel-title'>" + this.enunciat + "</h3></div>";  
+  this.html += "<div class='body'><p id=-1>" +this.contingut + "</p></div>";
+  this.html += "<ul class='list-group'>";
   this.afegirPreguntes();
+  this.html += "</ul>";
   this.html += "</div>";
+
 };

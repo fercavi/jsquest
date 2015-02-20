@@ -38,7 +38,7 @@ function ObtindreBuida(tipus) {
 //Obtenidors
 
 function ObtindreObtenidor(tipus) {
-  var obtenidor = ObtenidorBuit;
+  var obtenidor = ObtenidorBuit;  
   switch (tipus) {
     case DefItem:
       break;
@@ -49,7 +49,7 @@ function ObtindreObtenidor(tipus) {
       obtenidor = ObtindreRespostaNormal;
       break;
     case DefItemRadioButton:
-      obtenidor = ObtindreValorMultiple;
+      obtenidor = ObtindreValorMultiple;      
       break;
     case DefItemMultipleChoice:
       obtenidor = ObtindreValorMultiple;
@@ -58,7 +58,7 @@ function ObtindreObtenidor(tipus) {
       obtenidor = ObtindreRespostaDragAndDrop;
       break;
     case DefItemRadioButtonVertical:
-      obtenidor = ObtindreValorMultiple;
+      obtenidor = ObtindreRespostaRadioButton;
       break;
     case DefItemMultiShortAnswer:
       obtenidor = ObtindreRespostaMultiShort;
@@ -92,34 +92,26 @@ function ObtindreRespostaDragAndDrop(pregunta) {
   return respostaContestada;
 }
 
-function ObtindreRespostaNormal(pregunta) {
-  var id = pregunta.getAttribute('id');
-  var formulari = document.forms['f' + id];
-  var pregunta = formulari.elements[0];
-  return pregunta.value;
+function ObtindreRespostaNormal(pregunta) {  
+  return $("#pregunta_"+pregunta).val();
 }
-
 function ObtindreValorMultiple(pregunta) {
   var resultat = "";
-  var id = pregunta.getAttribute('id');
-  var formulari = document.forms['f' + id];
-  var valor;
-  for (var i = 0; i < formulari.elements.length; i++) {
-    if (formulari.elements[i].checked) {
-      if (formulari.elements[i].value = 'on')
-        valor = i;
-      else
-        valor = formulari.elements[i].value;
-      resultat += valor + "|";
+  var linies = $('.pregunta_'+pregunta);
+  linies.each(
+    function(index){
+      var linia = $('.pregunta_'+pregunta+':eq('+index+')');
+      if ($(linia).prop('checked')) {
+        resultat +=index+",";
+      }
     }
-  }
-  //llevem l'últim separador
+    );  
   resultat = resultat.substring(0, resultat.length - 1);
-  return resultat;
+  return resultat;  
 }
 
 function ObtindreRespostaMultiShort(pregunta) {
-  var inputs = pregunta.getElementsByTagName("input");
+  /*var inputs = pregunta.getElementsByTagName("input");
   var result = "";
   for (var i = 0; i < inputs.length; i++) {
     result += inputs[i].value;
@@ -127,4 +119,5 @@ function ObtindreRespostaMultiShort(pregunta) {
       result += "|";
   }
   return result;
+  */
 }

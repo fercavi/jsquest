@@ -23,19 +23,19 @@ Item.prototype.generarPregunta = function() {
   this.fiPreguntaGenerica();
 }
 Item.prototype.iniciPreguntaGenerica = function() {
-  this.html = "<br/><table align='center' border='1' cellpadding='10%'' cellspacing='0' width='100%'><tr><td><form name='f" + this.Id + "' tipus='" + this.tipus + "'><p id=" + this.Id + " obligatoria='" + this.obligatoria + "' >";  
+  this.html = "<li class='list-group-item preguntaItem' tipus="+this.tipus+"  id=" + this.Id + " obligatoria='" + this.obligatoria + "' >";    
   if  (this.Visor){
     this.html+= "<div align='right'><img src='img/green_flag.png' width=16>&nbsp;<img style='cursor:pointer' src='img/enviar.png' onClick='enviar("+this.Id+")'>&nbsp;<img style='cursor:pointer' src='img/edit.png' onClick='editarEstimulEnQuestionari("+this.Id+")' width=16><img style='cursor:pointer' src='img/baja.png' onClick='baixar("+this.Id+")' width=16>&nbsp;<img style='cursor:pointer' src='img/sube.png' onClick='pujar("+this.Id+")' width=16>&nbsp;<img style='cursor:pointer' src='img/delete.png' onClick='esborrarItem("+this.Id+")' width=16></div>" ;
   }
   if (this.obligatoria) {
-    this.html = this.html + "<font color='red'>*</font>";
+    this.html += ' <div class="alert alert-danger"><span class="glyphicon glyphicon-star " aria-hidden="true"></span> Obligatoria</div>';
   }  
   this.html = this.html + this.enunciat;
-  this.html +="<br/></br>";
+  this.html +="<br/>";
    
 };
 Item.prototype.fiPreguntaGenerica = function() {
-  this.html += "</p></form></td></tr></table>";
+  this.html += "</li>";
 };
 Item.prototype.processarPregunta = function() {
 
@@ -48,7 +48,7 @@ function ItemRespostaLlarga(Enunciat, Id, Obligatoria) {
 
 ItemRespostaLlarga.prototype = new Item;
 ItemRespostaLlarga.prototype.processarPregunta = function() {
-  this.html = this.html + "<textarea cols=55 rows=6 name=pregunta" + this.Id + "></textarea>";
+  this.html = this.html + "<textarea class='form-control' rows=6 id=pregunta_" + this.Id + "></textarea>";
 }
 
 function ItemComboBox(Enunciat, Respostes, Id, Obligatoria) {
@@ -58,7 +58,7 @@ function ItemComboBox(Enunciat, Respostes, Id, Obligatoria) {
 }
 ItemComboBox.prototype = new Item;
 ItemComboBox.prototype.processarPregunta = function() {
-  this.html += "<select id=pregunta" + this.Id + ">";
+  this.html += "<div clas='form-group'><label for='pregunta"+this.Id+"'></label><select class='form-control' id=pregunta_" + this.Id + ">";
   for (var i = 0; i < this.respostes.length; i++) {
     this.html += "<option value=" + i + ">" + this.respostes[i] + "</option>";
   }
@@ -73,7 +73,7 @@ function ItemRadioButton(Enunciat, Respostes, Id, Obligatoria) {
 ItemRadioButton.prototype = new Item;
 ItemRadioButton.prototype.processarPregunta = function() {
   for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<input type='radio' name='pregunta" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input>";
+    this.html += "<label class='radio-inline'><input type='radio' id='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input></label>";
   }
 }
 
@@ -84,7 +84,7 @@ function ItemRadioButtonVertical(Enunciat, Respostes, Id, Obligatoria, Tipus) {
 ItemRadioButtonVertical.prototype = new ItemRadioButton;
 ItemRadioButtonVertical.prototype.processarPregunta = function() {
   for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<input type='radio' name='pregunta" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input><br/>";
+    this.html += "<div class='radio'><label><input type='radio' id='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input></label></div>";
   }
 }
 
@@ -96,7 +96,7 @@ function ItemMultipleChoice(Enunciat, Respostes, Id, Obligatoria) {
 ItemMultipleChoice.prototype = new Item;
 ItemMultipleChoice.prototype.processarPregunta = function() {
   for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<input type='checkbox' name='pregunta" + this.Id + "'>" + this.respostes[i] + "</input><br/>";
+    this.html += "<div class='checkbox'><label><input type='checkbox' name='pregunta_"+this.Id+"' class='pregunta_" + this.Id + "'>" + this.respostes[i] + "</input></label></div>";
   }
 }
 

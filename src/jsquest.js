@@ -56,11 +56,14 @@ function postLoadDependencies() {
   ArrayItemClasses.push(ItemMultipleChoice); //4
   ArrayItemClasses.push(ItemDragAndDrop); //5
   ArrayItemClasses.push(ItemRadioButtonVertical); //6
-  ArrayItemClasses.push(ItemMultiShortAnswer); //7
-
+  ArrayItemClasses.push(ItemMultiShortAnswer); //7  
    data = JSON.parse(JSONData);
   _document = data.Document;
   _questionari = _document.Questionari;
+  cancelarText=data.Textos.textCancelar;
+  seguentText = data.Textos.textSeguent;
+  anteriorText = data.Textos.textAnterior;
+  acabarText = data.Textos.textAcabar;
   URLEscape = data.urlEscape;
   missatgeErrorObligatories = data.MissategErrorObligatories;
   Q = new Questionari(_questionari.Titol, _questionari.Instruccions, _questionari.TitolInstruccions);
