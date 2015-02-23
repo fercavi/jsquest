@@ -116,7 +116,7 @@ ItemDragAndDrop.prototype.processarPregunta = function() {
   var Enunciats = this.enunciats;  
   this.html += "<div class='list-group' style='width:25%'>";
   for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<a class='list-group-item draggable'>"+this.respostes[i]+"</a>";
+   this.html += "<a class='list-group-item draggable' style='z-Index:100000'>"+this.respostes[i]+"</a>";   
    }
    this.html += "</div>";
    this.html += "<div class='row container'><div class='list-group col-sm-6' style='width:25%'>";
@@ -124,14 +124,13 @@ ItemDragAndDrop.prototype.processarPregunta = function() {
     this.html += "<a class='list-group-item'>"+Enunciats[i]+"</a>"
    }
    this.html += "</div>";
-   this.html += "<div class='list-group col-sm-6' droppable style='width:25%'>";
+   this.html += "<div class='list-group col-sm-6 droppable'  style='width:30%;'>";
    for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<a class='list-group-item droppable'>&nbsp;</a>"
+    this.html += "<a class='list-group-item' width='100%'>&nbsp;</a>"
    }
    this.html += "</div>";
-   this.html += "</div>";
-
-}
+   this.html += "</div>";     
+ }
 
 function ItemMultiShortAnswer(Enunciat, Respostes, Id, Obligatoria, maxlength) {
   if (maxlength)

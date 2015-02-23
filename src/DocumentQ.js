@@ -183,7 +183,15 @@ DocumentQ.prototype.generarHTML = function() {
   this.html +='</ul>';
   this.html += "<div align='center'><input type='button' name='cancelar' value='"+cancelarText+"' onClick='_Documentq.cancelar()' /></div>"
   this.contenedor.innerHTML = this.html;
-  $(".draggable").draggable();
-  $(".droppable").droppable();
+  $(".draggable").draggable({
+    cursor: 'move',          // sets the cursor apperance
+    revert: 'invalid',   
+    stack: 'draggable',
+    zIndex:100000,
+  });
+  $(".droppable").droppable({
+    accept:".draggable",    
+  });
+
   this.carregarRespostes(); //carrega les respostes guardades
 }
