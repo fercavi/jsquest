@@ -58,10 +58,16 @@ function ObtindreObtenidor(tipus) {
       obtenidor = ObtindreRespostaDragAndDrop;
       break;
     case DefItemRadioButtonVertical:
-      obtenidor = ObtindreRespostaRadioButton;
+      obtenidor = ObtindreValorMultiple;
       break;
     case DefItemMultiShortAnswer:
       obtenidor = ObtindreRespostaMultiShort;
+      break;
+    case DefItemFillGaps:
+      obtenidor = ObtindreRespostaMultiShort;
+      break;
+    case DefItemVF:
+      obtenidor = ObtindreValorMultiple;
       break;
   }
   return obtenidor;
@@ -72,24 +78,17 @@ function ObtenidorBuit() {
 }
 
 function ObtindreRespostaDragAndDrop(pregunta) {
-
-  var taules = pregunta.getElementsByClassName('desti'); //taula
-  var taula = taules[0];
-  var files = taula.rows;
   var respostaContestada = "";
   var respostaActual = "";
-  for (var j = 0; j < files.length; j++) {
-    fila = files[j].cells;
-    respostaActual = "";
-    if (fila[1].childNodes[0]) {
-      respostaActual = fila[1].childNodes[0].innerHTML;
-    }
-    if (j != (files.length - 1)) {
-      respostaActual += "|";
-    }
-    respostaContestada += respostaActual;
-  }
-  return respostaContestada;
+  $('#pregunta_'+pregunta+ ' div').each(
+      function(index){
+         respostaActual += $(this).html();
+         respostaActual = respostaActual.replace("&nbsp;","");
+         respostaActual+="|";
+     }
+    );
+  respostaActual = respostaActual.substring(0, respostaActual.length-1);  
+  return respostaActual;
 }
 
 function ObtindreRespostaNormal(pregunta) {  
@@ -98,6 +97,7 @@ function ObtindreRespostaNormal(pregunta) {
 function ObtindreValorMultiple(pregunta) {
   var resultat = "";
   var linies = $('.pregunta_'+pregunta);
+  
   linies.each(
     function(index){
       var linia = $('.pregunta_'+pregunta+':eq('+index+')');
@@ -111,13 +111,20 @@ function ObtindreValorMultiple(pregunta) {
 }
 
 function ObtindreRespostaMultiShort(pregunta) {
-  /*var inputs = pregunta.getElementsByTagName("input");
-  var result = "";
-  for (var i = 0; i < inputs.length; i++) {
-    result += inputs[i].value;
-    if (i != inputs.length - 1)
-      result += "|";
-  }
-  return result;
-  */
+  var respostes = "";  
+  files= $("#taula_"+pregunta + " tr ");  
+  files.each(
+    function(index){
+      var respostaActual = "";
+      $(this).find("input").each(
+         function(index){
+            respostaActual+=$(this).val() + ","; 
+         }         
+        );
+      respostaActual = respostaActual.substring(0, respostaActual.length-1);
+      respostes += respostaActual + "|";
+    }
+    );
+  respostes = respostes.substring(0, respostes.length-1);
+  return respostes;
 }

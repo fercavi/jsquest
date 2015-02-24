@@ -57,6 +57,8 @@ function postLoadDependencies() {
   ArrayItemClasses.push(ItemDragAndDrop); //5
   ArrayItemClasses.push(ItemRadioButtonVertical); //6
   ArrayItemClasses.push(ItemMultiShortAnswer); //7  
+  ArrayItemClasses.push(ItemFillGaps); //8
+  ArrayItemClasses.push(ItemVF); //9
    data = JSON.parse(JSONData);
   _document = data.Document;
   _questionari = _document.Questionari;

@@ -11,6 +11,8 @@ var cancelarText;
 var seguentText;
 var anteriorText;
 var acabarText;
+var idPreguntaDragAndDrop;
+var PreguntaDragAndDrop;
 
 function Resposta(nom, valor) {
   this.nom = nom;
@@ -168,7 +170,7 @@ DocumentQ.prototype.carregarRespostes = function() {
 }
 DocumentQ.prototype.generarHTML = function() {
   this.questionari.generarHTML();
-  this.html = this.questionari.html;  
+  this.html = this.questionari.html;    
   this.html +='<ul class="pager">';
   if (this.questionari.potAnarEnrere()) {
     this.html +='<li class="previous"><a href="javascript: _Documentq.anterior();">'+anteriorText+'</a></li>'; 
@@ -188,9 +190,23 @@ DocumentQ.prototype.generarHTML = function() {
     revert: 'invalid',   
     stack: 'draggable',
     zIndex:100000,
+    start:function(event,ui){
+      idPreguntaDragAndDrop=$(this).attr("pregunta");
+      PreguntaDragAndDrop = this;
+    },
   });
   $(".droppable").droppable({
-    accept:".draggable",    
+    //accept:".draggable",   
+    drop: function(event,ui) {
+        var idPreg=$(this).attr("pregunta");
+        if (idPreg==idPreguntaDragAndDrop){
+          //alert('ok');
+          $(this).append($(PreguntaDragAndDrop).html());
+        }
+        else{
+         return false;
+        }
+    },
   });
 
   this.carregarRespostes(); //carrega les respostes guardades

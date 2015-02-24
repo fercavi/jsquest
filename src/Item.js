@@ -6,6 +6,9 @@ var DefItemMultipleChoice = 4;
 var DefItemDragAndDrop = 5;
 var DefItemRadioButtonVertical = 6;
 var DefItemMultiShortAnswer = 7;
+var DefItemFillGaps = 8;
+var DefItemVF = 9;
+
 
 function Item(Enunciat, Id, Obligatoria) {
   this.enunciat = Enunciat;
@@ -113,20 +116,21 @@ function ItemDragAndDrop(Enunciat, Respostes, Id, Obligatoria) {
 ItemDragAndDrop.prototype = new Item;
 
 ItemDragAndDrop.prototype.processarPregunta = function() {
-  var Enunciats = this.enunciats;  
+  var Enunciats = this.enunciats;    
   this.html += "<div class='list-group' style='width:25%'>";
   for (var i = 0; i < this.respostes.length; i++) {
-   this.html += "<a class='list-group-item draggable' style='z-Index:100000'>"+this.respostes[i]+"</a>";   
+   this.html += "<div class='droppable'><a class='btn-primary list-group-item draggable' style='z-Index:100000' pregunta="+this.Id +">"+this.respostes[i]+"</a></div>";   
    }
    this.html += "</div>";
    this.html += "<div class='row container'><div class='list-group col-sm-6' style='width:25%'>";
    for (var i = 0; i < Enunciats.length; i++) {
-    this.html += "<a class='list-group-item'>"+Enunciats[i]+"</a>"
+    this.html += "<a class='btn-success list-group-item'>"+Enunciats[i]+"</a>"
    }
    this.html += "</div>";
-   this.html += "<div class='list-group col-sm-6 droppable'  style='width:30%;'>";
+   this.html += "<div class='list-group col-sm-6' id='pregunta_"+this.Id + "'  style='width:30%;'>";
    for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<a class='list-group-item' width='100%'>&nbsp;</a>"
+    //this.html += "<a class='btn-info droppable list-group-item' width='100%' id='pregunta_"+this.Id+"_"+i+"'>&nbsp;</a>"
+    this.html += "<div class='btn-info droppable list-group-item' pregunta="+this.Id+">&nbsp;</div>"
    }
    this.html += "</div>";
    this.html += "</div>";     
@@ -153,4 +157,43 @@ ItemMultiShortAnswer.prototype.processarPregunta = function() {
   }
   this.html += "</table>";
 
+}
+function ItemFillGaps(Enunciat, Respostes, Id, Obligatoria, maxlength) {
+  if (maxlength)
+    this.maxlength = maxlength;
+  else
+    this.maxlength = 1;
+  this.Size = Math.max(this.maxlength, 3);
+  Item.call(this, Enunciat, Id, Obligatoria);
+  this.respostes = Respostes;
+  this.tipus = DefItemFillGaps;  
+}
+ItemFillGaps.prototype = new Item();
+ItemFillGaps.prototype.processarPregunta = function(){
+  var linia = "";
+  this.html += "<table id='taula_"+this.Id + "'>";  
+  for (var i = 0; i < this.respostes.length; i++) {
+    linia = "<tr><td>" + this.respostes[i] + "</td></tr>";
+    var input= "<input type='text' value='' name='resposta" + this.Id + "_" + i + "' maxlength=" + this.maxlength + " size=" + this.Size + "></input>";    
+    linia = linia.replace(/{/g,input);
+    this.html += linia;    
+  }
+  this.html += "</table>";  
+}
+
+function ItemVF(Enunciat,Respostes,Id,Obligatoria){
+  Item.call(this,Enunciat,Id,Obligatoria);
+  this.respostes = Respostes;
+  this.tipus = DefItemVF;
+}
+ItemVF.prototype = new Item();
+ItemVF.prototype.processarPregunta= function(){
+  this.html += "<table class='table table-hover'>";
+  this.html += "<tr><th>&nbsp;</th><th>V</th><th>F</th></tr>";  
+  for(var i=0;i<this.respostes.length;i++){
+    this.html += "<tr>";
+    this.html += "<td>"+this.respostes[i]+"</td><td><input type='radio' class='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "_"+i+"' value=1></td><td><input type='radio' class='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "_"+i+"' value=0></td>";
+    this.html +="</tr>";
+  }  
+  this.html += "</table>";
 }
