@@ -67,6 +67,9 @@ function ObtindreObtenidor(tipus) {
       obtenidor = ObtindreRespostaMultiShort;
       break;
     case DefItemVF:
+      obtenidor = ObtindreValorMultiple;      
+      break;
+    case DefItemGrill:
       obtenidor = ObtindreValorMultiple;
       break;
   }
@@ -101,12 +104,15 @@ function ObtindreValorMultiple(pregunta) {
   linies.each(
     function(index){
       var linia = $('.pregunta_'+pregunta+':eq('+index+')');
-      if ($(linia).prop('checked')) {
-        resultat +=index+",";
+      if ($(linia).prop('checked')) {        
+        resultat += $(linia).val() + ",";
+      }
+      else{
+        resultat += ","; 
       }
     }
     );  
-  resultat = resultat.substring(0, resultat.length - 1);
+  //resultat = resultat.substring(0, resultat.length - 1);
   return resultat;  
 }
 

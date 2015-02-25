@@ -59,6 +59,7 @@ function postLoadDependencies() {
   ArrayItemClasses.push(ItemMultiShortAnswer); //7  
   ArrayItemClasses.push(ItemFillGaps); //8
   ArrayItemClasses.push(ItemVF); //9
+  ArrayItemClasses.push(ItemGrill); //10
    data = JSON.parse(JSONData);
   _document = data.Document;
   _questionari = _document.Questionari;

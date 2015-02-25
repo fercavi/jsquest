@@ -8,6 +8,7 @@ var DefItemRadioButtonVertical = 6;
 var DefItemMultiShortAnswer = 7;
 var DefItemFillGaps = 8;
 var DefItemVF = 9;
+var DefItemGrill = 10;
 
 
 function Item(Enunciat, Id, Obligatoria) {
@@ -61,7 +62,7 @@ function ItemComboBox(Enunciat, Respostes, Id, Obligatoria) {
 }
 ItemComboBox.prototype = new Item;
 ItemComboBox.prototype.processarPregunta = function() {
-  this.html += "<div clas='form-group'><label for='pregunta"+this.Id+"'></label><select class='form-control' id=pregunta_" + this.Id + ">";
+  this.html += "<div class='form-group'><label for='pregunta"+this.Id+"'></label><select class='form-control' id=pregunta_" + this.Id + ">";
   for (var i = 0; i < this.respostes.length; i++) {
     this.html += "<option value=" + i + ">" + this.respostes[i] + "</option>";
   }
@@ -76,7 +77,7 @@ function ItemRadioButton(Enunciat, Respostes, Id, Obligatoria) {
 ItemRadioButton.prototype = new Item;
 ItemRadioButton.prototype.processarPregunta = function() {
   for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<label class='radio-inline'><input type='radio' id='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input></label>";
+    this.html += "<label class='radio-inline'><input type='radio' class='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input></label>";
   }
 }
 
@@ -87,7 +88,7 @@ function ItemRadioButtonVertical(Enunciat, Respostes, Id, Obligatoria, Tipus) {
 ItemRadioButtonVertical.prototype = new ItemRadioButton;
 ItemRadioButtonVertical.prototype.processarPregunta = function() {
   for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<div class='radio'><label><input type='radio' id='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input></label></div>";
+    this.html += "<div class='radio'><label><input type='radio' class='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "' value=" + i + ">" + this.respostes[i] + "</input></label></div>";
   }
 }
 
@@ -106,8 +107,7 @@ ItemMultipleChoice.prototype.processarPregunta = function() {
 function ItemDragAndDrop(Enunciat, Respostes, Id, Obligatoria) {
   
   var enunciats = Enunciat.split("|");  
-  var cap = enunciats[0];
-  //alert(cap);
+  var cap = enunciats[0];  
   Item.call(this, cap, Id, Obligatoria);
   this.enunciats = enunciats.slice(1);
   this.respostes = Respostes;  
@@ -149,7 +149,7 @@ function ItemMultiShortAnswer(Enunciat, Respostes, Id, Obligatoria, maxlength) {
 ItemMultiShortAnswer.prototype = new Item;
 ItemMultiShortAnswer.prototype.processarPregunta = function() {
 
-  this.html += "<table>";
+  this.html += "<table class='table table-hover table-condensed table-bordered table-striped table-responsive'>";
   for (var i = 0; i < this.respostes.length; i++) {
     this.html += "<tr><td>" + this.respostes[i] + "</td>";
     this.html += "<td><input type='text' value='' name='resposta" + this.Id + "_" + i + "' maxlength=" + this.maxlength + " size=" + this.Size + "></input></td>";
@@ -171,7 +171,7 @@ function ItemFillGaps(Enunciat, Respostes, Id, Obligatoria, maxlength) {
 ItemFillGaps.prototype = new Item();
 ItemFillGaps.prototype.processarPregunta = function(){
   var linia = "";
-  this.html += "<table id='taula_"+this.Id + "'>";  
+  this.html += "<table id='taula_"+this.Id + "'  class='table table-hover table-condensed table-bordered table-striped table-responsive'>";  
   for (var i = 0; i < this.respostes.length; i++) {
     linia = "<tr><td>" + this.respostes[i] + "</td></tr>";
     var input= "<input type='text' value='' name='resposta" + this.Id + "_" + i + "' maxlength=" + this.maxlength + " size=" + this.Size + "></input>";    
@@ -188,11 +188,36 @@ function ItemVF(Enunciat,Respostes,Id,Obligatoria){
 }
 ItemVF.prototype = new Item();
 ItemVF.prototype.processarPregunta= function(){
-  this.html += "<table class='table table-hover'>";
-  this.html += "<tr><th>&nbsp;</th><th>V</th><th>F</th></tr>";  
+  this.html += "<table class='table table-hover table-condensed table-bordered table-striped table-responsive'>";
+  this.html += "<tr><th style='width:600px'>&nbsp;</th><th style='width:50px' >V</th><th style='width:50px'>F</th></tr>";  
   for(var i=0;i<this.respostes.length;i++){
     this.html += "<tr>";
     this.html += "<td>"+this.respostes[i]+"</td><td><input type='radio' class='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "_"+i+"' value=1></td><td><input type='radio' class='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "_"+i+"' value=0></td>";
+    this.html +="</tr>";
+  }  
+  this.html += "</table>";
+}
+function ItemGrill(Enunciat, Respostes, Id,Obligatoria){
+  var enunciats = Enunciat.split("|");  
+  var cap = enunciats[0];  
+  Item.call(this, cap, Id, Obligatoria);
+  this.enunciats = enunciats.slice(1);
+  this.respostes = Respostes;
+  this.tipus = DefItemGrill; 
+}
+ItemGrill.prototype = new Item();
+
+ItemGrill.prototype.processarPregunta = function(){
+  this.html += "<table class='table table-hover table-condensed table-bordered table-striped table-responsive'><thead>";
+  this.html += "<tr><th style='width:600px'>&nbsp;</th>";
+  for(var i=0;i<this.enunciats.length;i++)
+    this.html+="<th>"+ this.enunciats[i]+"</th>";
+  this.html += "</tr></thead>";  
+  for(var i=0;i<this.respostes.length;i++){
+    this.html += "<tr>";
+    this.html += "<td>"+this.respostes[i]+"</td>";
+    for (var j=0;j<this.enunciats.length;j++)
+      this.html += "<td style='width:50px'><input type='radio' class='pregunta_"+this.Id+"' name='pregunta_" + this.Id + "_"+i+"' value="+j+"></td>";
     this.html +="</tr>";
   }  
   this.html += "</table>";
