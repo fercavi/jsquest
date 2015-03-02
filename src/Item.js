@@ -9,6 +9,7 @@ var DefItemMultiShortAnswer = 7;
 var DefItemFillGaps = 8;
 var DefItemVF = 9;
 var DefItemGrill = 10;
+var DefItemSort = 11;
 
 
 function Item(Enunciat, Id, Obligatoria) {
@@ -100,7 +101,7 @@ function ItemMultipleChoice(Enunciat, Respostes, Id, Obligatoria) {
 ItemMultipleChoice.prototype = new Item;
 ItemMultipleChoice.prototype.processarPregunta = function() {
   for (var i = 0; i < this.respostes.length; i++) {
-    this.html += "<div class='checkbox'><label><input type='checkbox' name='pregunta_"+this.Id+"' class='pregunta_" + this.Id + "'>" + this.respostes[i] + "</input></label></div>";
+    this.html += "<div class='checkbox'><label><input type='checkbox' name='pregunta_"+this.Id+"' class='pregunta_" + this.Id + "' value="+i+">" + this.respostes[i] + "</input></label></div>";
   }
 }
 
@@ -188,7 +189,7 @@ function ItemVF(Enunciat,Respostes,Id,Obligatoria){
 }
 ItemVF.prototype = new Item();
 ItemVF.prototype.processarPregunta= function(){
-  this.html += "<table class='table table-hover table-condensed table-bordered table-striped table-responsive'>";
+  this.html += "<table id='taula_" + this.Id + "' class='table table-hover table-condensed table-bordered table-striped table-responsive'>";
   this.html += "<tr><th style='width:600px'>&nbsp;</th><th style='width:50px' >V</th><th style='width:50px'>F</th></tr>";  
   for(var i=0;i<this.respostes.length;i++){
     this.html += "<tr>";
@@ -208,7 +209,7 @@ function ItemGrill(Enunciat, Respostes, Id,Obligatoria){
 ItemGrill.prototype = new Item();
 
 ItemGrill.prototype.processarPregunta = function(){
-  this.html += "<table class='table table-hover table-condensed table-bordered table-striped table-responsive'><thead>";
+  this.html += "<table id='taula_"+this.Id+ "' class='table table-hover table-condensed table-bordered table-striped table-responsive'><thead>";
   this.html += "<tr><th style='width:600px'>&nbsp;</th>";
   for(var i=0;i<this.enunciats.length;i++)
     this.html+="<th>"+ this.enunciats[i]+"</th>";
@@ -221,4 +222,20 @@ ItemGrill.prototype.processarPregunta = function(){
     this.html +="</tr>";
   }  
   this.html += "</table>";
+}
+
+function ItemSort(Enunciat,Respostes,Id,Obligatoria){
+
+  Item.call(this, Enunciat, Id, Obligatoria);
+  this.respostes = Respostes;
+  this.enunciat = Enunciat;
+  this.tipus = DefItemSort;
+}
+ItemSort.prototype = new Item();
+ItemSort.prototype.processarPregunta = function(){
+  this.html +="<ol id='pregunta_"+this.Id + "' class='ui-sortable' style='list-style-type: none; margin: 0; padding: 0; width: 40%;'>";
+  for (var i=0;i<this.respostes.length;i++){
+    this.html+="<li  valor="+i+" style='margin: 0 3px 3px 3px; padding: 0.4em;padding-top:0em; padding-left: 1.5em; font-size: 1.0em; height: 18px;' class='ui-state-default ui-sortable-handle'><span  class='ui-icon ui-icon-arrowthick-2-n-s' style='position: absolute; margin-left: -1.3em;'></span>" + this.respostes[i] + "</li>";
+  }
+  this.html +="</ol>";
 }

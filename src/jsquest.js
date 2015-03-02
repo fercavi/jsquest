@@ -60,6 +60,7 @@ function postLoadDependencies() {
   ArrayItemClasses.push(ItemFillGaps); //8
   ArrayItemClasses.push(ItemVF); //9
   ArrayItemClasses.push(ItemGrill); //10
+  ArrayItemClasses.push(ItemSort); //11
    data = JSON.parse(JSONData);
   _document = data.Document;
   _questionari = _document.Questionari;

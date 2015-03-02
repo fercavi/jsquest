@@ -67,11 +67,13 @@ function ObtindreObtenidor(tipus) {
       obtenidor = ObtindreRespostaMultiShort;
       break;
     case DefItemVF:
-      obtenidor = ObtindreValorMultiple;      
+      obtenidor = ObtindreRespostaGrill;      
       break;
     case DefItemGrill:
-      obtenidor = ObtindreValorMultiple;
+      obtenidor = ObtindreRespostaGrill;
       break;
+    case DefItemSort:
+      obtenidor = ObtindreRespostaSort;
   }
   return obtenidor;
 }
@@ -99,21 +101,31 @@ function ObtindreRespostaNormal(pregunta) {
 }
 function ObtindreValorMultiple(pregunta) {
   var resultat = "";
-  var linies = $('.pregunta_'+pregunta);
-  
+  var linies = $('.pregunta_'+pregunta );  
   linies.each(
     function(index){
-      var linia = $('.pregunta_'+pregunta+':eq('+index+')');
-      if ($(linia).prop('checked')) {        
+      var linia = $('.pregunta_'+pregunta+':eq('+index+')');      
+      if ($(linia).prop('checked')) {                
         resultat += $(linia).val() + ",";
       }
-      else{
-        resultat += ","; 
-      }
     }
-    );  
-  //resultat = resultat.substring(0, resultat.length - 1);
+    );
+  resultat = resultat.substring(0, resultat.length - 1);
   return resultat;  
+}
+function ObtindreRespostaGrill(pregunta){
+  var resultatAcumulat = "";
+  var resultat="";
+  var linies = $("#taula_"+pregunta + " tr");
+  var nrespostes = linies.length-1;
+  for(var i=0;i<nrespostes;i++){
+    resultat = $("input:radio[name=pregunta_"+pregunta+"_"+i+"]:checked").val();
+    if (!resultat)
+      resultat="";
+    resultatAcumulat +=resultat + ",";    
+  }
+  resultatAcumulat = resultatAcumulat.substring(0, resultatAcumulat.length-1);
+  return resultatAcumulat;
 }
 
 function ObtindreRespostaMultiShort(pregunta) {
@@ -131,6 +143,16 @@ function ObtindreRespostaMultiShort(pregunta) {
       respostes += respostaActual + "|";
     }
     );
+  respostes = respostes.substring(0, respostes.length-1);
+  return respostes;
+}
+function ObtindreRespostaSort(pregunta){
+  var respostes = "";
+  files = $("#pregunta_"+pregunta + " li");
+  for(var i=0;i<files.length;i++){
+    respostaActual = $(files[i]).attr("valor");
+    respostes += respostaActual + ",";
+  }
   respostes = respostes.substring(0, respostes.length-1);
   return respostes;
 }

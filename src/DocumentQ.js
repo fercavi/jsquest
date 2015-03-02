@@ -208,6 +208,8 @@ DocumentQ.prototype.generarHTML = function() {
         }
     },
   });
+  $(".ui-sortable").sortable();
+  $(".ui-sortable").disableSelection();
 
   this.carregarRespostes(); //carrega les respostes guardades
 }
